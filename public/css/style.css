@@ -1,0 +1,396 @@
+@font-face {
+	font-family: "Open Sans";
+	font-style: normal;
+	font-weight: 400;
+	src: url("OpenSans.woff") format("woff");
+}
+
+/*
+** Global things
+*/
+
+html {
+	display: flex; /* st*pid fix for ie */
+}
+
+html, body {
+	width: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font-family: "Open Sans", sans-serif;
+	font-size: 14px;
+	color: #2e3a42;
+	background-color: #424f5b;
+	display: flex;
+	min-height: 100vh;
+	flex-direction: column;
+}
+
+header {
+	min-height: 10px;
+	background-color: #a4a9b9;
+}
+
+header h1 {
+	margin: 0;
+	font-size: 5em;
+}
+
+@media screen and (max-width: 1000px), @media handheld {
+	header h1 { text-align: center; font-size: 12vw; }
+}
+
+section {
+	flex-grow: 1;
+	flex-shrink: 1;
+}
+
+article, aside {
+	background-color: #DADADD;
+	padding: 15px;
+}
+
+.square_choices {
+	display: flex;
+	margin: 60px;	
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+	overflow: auto;
+	width: auto;
+}
+
+.square_choices article, .square_choices aside.form_complement { flex: 1 360px; }
+
+@media screen and (max-width:640px), @media handheld {
+	.square_choices article {
+		margin: 20px 0;
+	}
+
+	.square_choices {
+		margin: 0;
+	}
+}
+
+footer {
+	width: 100%;
+	min-height: 10px;
+	margin-bottom: 15px;
+	padding: 7px;
+	cursor: default;
+	color: #fff;
+	background-color: #2e3a42;
+	text-align: center;
+	font-weight: bold;
+	color: #A4A9B9;
+}
+
+footer ul {
+	display: flex;
+	flex-wrap: wrap;
+	flex: 1 100px;
+	padding: 0;
+	justify-content: center;
+	align-items: center;
+	list-style-type: none;
+}
+
+footer ul li { margin: 0 10px;}
+
+/* stupid fix for ie AGAIN */
+
+img[src*=".svg"] {
+	width: 100%\9;
+	height: 100%\9;
+}
+
+@media screen and (min-width:0\0) {
+	img[src*=".svg"] {
+		width: 100%;
+		height: 100%
+	}
+}
+
+/*
+** Forms
+*/
+
+form {
+	margin: 10px;
+}
+
+fieldset {
+	border: none;
+	margin: 0;
+	padding: 0;
+}
+
+div.input-rounded-groups
+{
+	margin: 8px 2px;
+	display: table;
+}
+
+div.input-rounded-groups input:disabled {
+    background-color: #eee;
+}
+
+div.input-rounded-groups input:disabled:hover {
+	background-color: #eee;
+}
+
+div.input-group-addon:first-child {
+	border-right: none;
+	border-top-right-radius: 0;
+	border-bottom-right-radius: 0;
+}
+
+div.input-rounded-groups input, div.input-rounded-groups span, div.input-rounded-groups button
+{
+	color: #555;
+	background-color: #eee;
+	border: 1px solid #ccc;
+	padding: 6px 12px;
+	line-height: 1;
+	text-align: center;
+}
+
+div.input-rounded-groups span
+{
+	display: table-cell;
+	white-space: nowrap;
+	border-right: none;
+	width: 1%;
+	vertical-align: middle;
+}
+
+div.input-rounded-groups span.mini {
+	border: 1px solid #ccc;
+}
+
+div.input-rounded-groups input {
+	display: table-cell;
+	width: 100%;
+	background-color: rgba(255, 255, 255, 0.8);
+	box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset;
+	text-align: left;
+	transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+}
+
+div.input-rounded-groups input:hover, div.input-rounded-groups input:focus {
+	background-color: rgba(255, 255, 255, 1);
+}
+
+div.ensemble
+{
+	width: auto;
+	display: inline;
+	padding: 5px 0;
+	color: #383838;
+	background-color: rgba(164, 164, 185, 0.75);
+}
+
+div.ensemble:hover
+{
+	background-color: rgba(164, 164, 185, 0.75);
+}
+
+div.ensemble input, div.ensemble button
+{
+	line-height: normal;
+	transition: padding 0.1s linear;
+}
+
+div.ensemble label
+{
+	margin: 0 5px;
+	transition: opacity 0.5s linear, margin 0.2s linear;
+}
+
+div.ensemble:hover label
+{
+	margin: 0 15px;
+}
+
+@media screen and (max-width:640px), @media handheld {
+	div.ensemble, div.ensemble:hover
+	{
+		background-color: transparent;
+	}
+
+	div.ensemble label
+	{
+		margin: 0;
+		padding: 3px 15px;
+		background-color: rgba(164, 164, 185, 0.75);
+		border-radius: 6px;
+	}
+
+	div.ensemble button
+	{
+		display: block;
+		margin: 8px auto;
+	}
+
+	div.ensemble:hover label
+	{
+		margin: 0;
+	}
+}
+
+div.ensemble input[type="checkbox"]
+{
+	vertical-align: middle;
+}
+
+div.input-rounded-groups.button
+{
+	display: block;
+	text-align: center;
+}
+
+div.input-rounded-groups.button input
+{
+	width: auto;
+	display: inline;
+}
+
+div.input-rounded-groups input:focus, div.input-rounded-groups button:hover, div.input-upload-groups:hover div.input-rounded-groups button {
+    border-color: rgba(71, 73, 112, 0.7);
+    outline: 0px none;
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset, 0px 0px 8px rgba(71, 73, 112, 0.4);
+}
+
+div.input-upload-groups:hover div.input-rounded-groups button {
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+div.input-upload-groups div.input-rounded-groups.button { text-align: left; }
+div.input-upload-groups div.input-rounded-groups button { position: absolute; bottom: 15px; }
+
+div.input-rounded-groups button {
+	cursor: pointer;
+	font-weight: bold;
+}
+
+/*
+** Specific things
+*/
+
+* {
+	box-sizing: border-box;
+}
+
+a {
+	text-decoration: none;
+	color: #474970;
+	font-weight: 800;
+}
+
+a:hover {
+	cursor: pointer;
+	color: #F8F8F8;
+}
+
+p {
+	text-indent: 10px;
+	text-align: justify;
+}
+
+.error {
+	color: #dd2222;
+}
+
+:required {
+	border: none;
+	box-shadow: none;
+}
+
+.radius {
+	border-radius: 8px;
+}
+
+.radius.top {
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 0;
+}
+
+.radius.right {
+	border-top-left-radius: 0;
+	border-bottom-left-radius: 0;
+}
+
+.radius.bottom {
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+}
+
+.radius.left {
+	border-top-right-radius: 0;
+	border-bottom-right-radius: 0;
+}
+
+/*
+** Angular css
+*/
+
+aside.form_complement {
+	box-shadow: 7px 7px 10px rgba(0, 0, 0, 0.33);
+	text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.13);
+	background-color: #DADADD;
+	min-height: 0;
+	padding: 0;
+	margin: 50px auto auto auto;
+	width: 80vw;
+	text-align: center;
+}
+
+aside.form_complement p, div.logs {
+	width: 100%;
+	padding: 15px;
+	padding-left: 30px;
+	margin: 0;
+}
+
+div.logs { position: relative; text-align: left; }
+
+aside.form_complement p:first-child
+{
+	border-top-right-radius: 8px;
+	border-top-left-radius: 8px;
+}
+
+aside.form_complement p:last-child
+{
+	border-bottom-right-radius: 8px;
+	border-bottom-left-radius: 8px;
+}
+
+aside.form_complement p.error, div.logs.error {
+	color: black;
+}
+
+input.ng_invalid.ng_dirty, p.error, div.logs.error {
+	background-color: rgba(187, 34, 34, 0.5);
+	background-image: url("/images/error.svg");
+}
+
+input.ng_valid.ng_dirty, p.valid, div.logs.valid {
+	background-color: rgba(34, 187, 34, 0.5);
+}
+
+p.warning, div.logs.warning{
+	background-color: rgba(187, 187, 34, 0.8);
+	background-image: url("/images/warning.svg");
+}
+
+p.warning, p.error, div.logs.warning, div.logs.error {
+	background-size: 16px 16px;
+	background-position: right bottom;
+	background-repeat: no-repeat;
+	background-origin: content-box;
+}

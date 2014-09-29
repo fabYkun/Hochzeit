@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html ng-app="adminAuth">
+	<head>
+		<title>{[main]} - {[title]}</title>
+		{% include "./modules/header.html" %}
+	</head>
+	<body ng-controller="adminAuthCtrl">
+		<section>
+			<header>
+				<h1><a href="/">{[title]}</a></h1>
+			</header>
+			<logs-block></logs-block>
+			<nav class="square_choices reverse">
+				<article>
+					<p>{[paragraph]}</p>
+					<form>
+						<label><div class="input-rounded-groups">
+							<span class="radius left">{[password]}</span><input type="password" name="password" class="radius right" ng-model="password" maxlength="25" />
+						</div></label>
+						<div class="input-rounded-groups button" ng-cloak>
+							<div class="ensemble radius">
+								<button class="radius" ng-click="connexion()">{[submit]}</button>
+							</div>
+						</div>
+					</form>
+				</article>
+			</nav>
+		</section>
+		{% include "./modules/footer.html" %}
+		<script src="/js/angular/adminauth.js"></script>
+	</body>
+</html>

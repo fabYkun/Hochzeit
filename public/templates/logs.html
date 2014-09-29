@@ -1,0 +1,16 @@
+<aside class="centered radius form_complement" ng-controller="socketLogsCtrl" ng-show="socket.logs" ng-cloak>
+	<div class="logs" ng-repeat="log in socket.logs" ng-class="{valid: !log.error, error: log.error, warning: log.warning}">
+		<div id="loadingCircle" ng-show="log.countdown">
+			<div id="loadingCircle_1" class="loadingCircle"></div>
+			<div id="loadingCircle_2" class="loadingCircle"></div>
+			<div id="loadingCircle_3" class="loadingCircle"></div>
+			<div id="loadingCircle_4" class="loadingCircle"></div>
+			<div id="loadingCircle_5" class="loadingCircle"></div>
+			<div id="loadingCircle_6" class="loadingCircle"></div>
+			<div id="loadingCircle_7" class="loadingCircle"></div>
+			<div id="loadingCircle_8" class="loadingCircle"></div>
+		</div>
+		{{log.message}}
+	</div>
+	<a ng-click="socket.deleteLogs()">{{closeMsg}}</a>
+</aside>

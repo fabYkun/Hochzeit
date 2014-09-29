@@ -1,0 +1,22 @@
+<!DOCTYPE HTML>
+<html ng-app="playerApp">
+	<head>
+		<title>{[main]} - {[title]}</title>
+		{% include "./modules/header.html" %}
+	</head>
+	<body ng-controller="playerCtrl">
+		<section>
+			<header>
+				<h1><a href="/">{[title]}</a></h1>
+			</header>
+			<logs-block></logs-block>
+			<nav class="square_choices reverse">
+				<article>
+					Coucou =)
+				</article>
+			</nav>
+		</section>
+		{% include "./modules/footer.html" %}
+		<script src="/js/angular/player.js"></script>
+	</body>
+</html>
