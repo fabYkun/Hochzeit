@@ -1,10 +1,10 @@
 <!DOCTYPE HTML>
-<html>
+<html ng-app="errorApp">
 	<head>
 		<title>{[main]} - {[title]}</title>
 		{% include "./modules/header.html" %}
 	</head>
-	<body>
+	<body ng-controller="errorCtrl">
 		<section>
 			<header>
 				<h1><a href="/">{[title]}</a></h1>
@@ -18,5 +18,6 @@
 			</nav>
 		</section>
 		{% include "./modules/footer.html" %}
+		<script src="/js/angular/error.js"></script>
 	</body>
 </html>

@@ -51,6 +51,7 @@ section {
 article, aside {
 	background-color: #DADADD;
 	padding: 15px;
+	margin: 15px;
 }
 
 .square_choices {

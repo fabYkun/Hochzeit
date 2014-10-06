@@ -5,8 +5,21 @@ module.exports = function()
 	var Schema = mongoose.Schema;
 
 	/*
-	** Songs is an array containing all the songs that must be played
-	song {
+
+	** --- Data ---
+	**
+	** Array containing all questions
+	**
+	-- Multiple Choice
+	data = {
+		title:				String,
+		question:			String,
+		answers:			[String],
+		points:				Number,
+		found:				[String]
+	}
+	-- Songs
+	data = {
 		title:				String,
 		author:				String,
 		minInterval:		Number,	(min and max interval represent the begin and the end of the portion of the song that will be played, in seconds)
@@ -16,7 +29,7 @@ module.exports = function()
 	}
 
 	** Rounds describe the progress of the game
-	round {
+	round = {
 		propositions:		Array[
 			name:			String, (name of the person)
 			guess:			String,
@@ -24,13 +37,13 @@ module.exports = function()
 		]
 	}
 	*/
-	var RoomsSchema = new Schema({
+	var RoomSchema = new Schema({
 		Name: String,
-		Songs: [Object],
+		Data: [Object],
 		Rounds: [Object],
 		Created: {type: Date, default: Date.now}
 	});
 
-	module.RoomSchema = mongoose.model("rooms", RoomsSchema);
+	module.RoomSchema = mongoose.model("rooms", RoomSchema);
 	return (module);
 };

@@ -1,7 +1,6 @@
 var newAdmin = angular.module("newAdmin", ["webSocket", "languages", "showLogs", "switchLanguage"]);
 
 newAdmin.controller("newAdminCtrl", function ($scope, socket, languages){
-
 	$scope.language = document.getElementById("lang").innerHTML || "en";
 	$scope.confirmation = "";
 	$scope.password = "";

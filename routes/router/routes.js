@@ -52,12 +52,7 @@ module.exports = function(all)
 		query.exec(function(err, user)
 		{
 			if (user)
-			{
-				var err = new Error();
-
-				err.status = 404;
-				return (next(err));
-			}
+				res.redirect("/admin");
 			else
 				next();
 		});
