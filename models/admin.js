@@ -3,6 +3,7 @@ module.exports = function(all, socket, session, models)
 	var mongoose = require("mongoose");
 	var users = models.users;
 
+	require("./adminControl")(all, socket, session, models);
 	socket.on("setnewadmin", function(pwd){ setNewAdmin(pwd) });
 	socket.on("adminauth", function(pwd){ adminAuth(pwd) });
 	socket.on("changeLang", function(newLanguage){

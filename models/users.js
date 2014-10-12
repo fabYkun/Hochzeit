@@ -1,4 +1,4 @@
-module.exports = function(all)
+module.exports = function()
 {
 	var module = {};
 	var mongoose = require("mongoose");
@@ -6,7 +6,8 @@ module.exports = function(all)
 	var Schema = mongoose.Schema;
 	var UsersSchema = new Schema({
 		Pseudo:		String,
-		Room:		Number,
+		Room:		String,
+		Points:		Number,
 		AuthCookie:	String,
 		Timestamp:	{type: Date, default: Date.now}
 	});

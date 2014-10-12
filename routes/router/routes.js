@@ -4,8 +4,9 @@ module.exports = function(all)
 
 	// loading models
 
-	var users = require(all.root + "/models/users")(all);
-	var models = {"users": users};
+	var users = require(all.root + "/models/users")();
+	var rooms = require(all.root + "/models/room")();
+	var models = {"users": users, "rooms": rooms};
 
 	// autoAuth
 	require("./autoAuth")(app, models);

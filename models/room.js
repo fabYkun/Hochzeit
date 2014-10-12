@@ -21,6 +21,7 @@ module.exports = function()
 	-- Songs
 	data = {
 		title:				String,
+		pathname:			String,
 		author:				String,
 		minInterval:		Number,	(min and max interval represent the begin and the end of the portion of the song that will be played, in seconds)
 		maxInterval:		Number,
@@ -31,17 +32,21 @@ module.exports = function()
 	** Rounds describe the progress of the game
 	round = {
 		propositions:		Array[
-			name:			String, (name of the person)
+			pseudo:			String, (a person)
 			guess:			String,
 			isCorrect:		Boolean
 		]
 	}
+
+	** Players is an array of Users
+
 	*/
 	var RoomSchema = new Schema({
-		Name: String,
-		Data: [Object],
-		Rounds: [Object],
-		Created: {type: Date, default: Date.now}
+		Name:		String,
+		Data:		[Object],
+		Rounds:		[Object],
+		Players:	[Object],
+		Created:	{type: Date, default: Date.now}
 	});
 
 	module.RoomSchema = mongoose.model("rooms", RoomSchema);

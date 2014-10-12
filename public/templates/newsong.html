@@ -1,0 +1,11 @@
+<h1>{{title}}</h1>
+<p>{{presentation}}</p>
+<form>
+	<input type="text" ng-model="titlePlaceholder" /><br />
+	<div ng-repeat="song in songs">
+			<input type="text" ng-model="song.title" /><br />
+		<p ng-hide="song.invisible">
+			<input type="text" ng-model="song.pathname" /><br />
+		</p>
+	</div>
+</form>

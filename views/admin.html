@@ -12,19 +12,17 @@
 			<logs-block></logs-block>
 			<nav class="square_choices">
 				<article>
-					<h1>Current games</h1>
+					<h1>{[gamesList]}</h1>
 					<ul>
-						<li ng-repeat=""></li>
+						<li ng-repeat="games in gamesList">games.Name</li>
 					</ul>
 				</article>
 			</nav>
 			<nav class="square_choices">
 				<article>
-					<h1>Current games</h1>
-					<ul>
-						<li>COucou 1</li>
-						<li>COucou 1</li>
-					</ul>
+					<h1>{[createGame]}</h1>
+					<span ng-click="">New BlindTest</span><br />
+					<span ng-click="">New MC</span>
 				</article>
 			</nav>
 		</section>

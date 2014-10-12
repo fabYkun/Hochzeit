@@ -11,6 +11,8 @@ module.exports = function(all)
 				title:		"Admin",
 				password:	"Mot de passe",
 				submit:		"Connexion",
+				gamesList:	"Jeux crées",
+				createGame:	"Créer un nouveau jeu",
 				lang:		"fr"
 			},
 			"en": {
@@ -18,6 +20,8 @@ module.exports = function(all)
 				title:		"Admin",
 				password:	"Password",
 				submit:		"Connection",
+				gamesList:	"Created games",
+				createGame:	"Create a new game",
 				lang:		"en"
 			}
 		};
