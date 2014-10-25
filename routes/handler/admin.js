@@ -57,6 +57,7 @@ module.exports = function(all)
 
 	module.sessionNeeded = []; // listeners
 	module.sessionNeeded.push(require(all.root + "/models/admin"));
+	module.sessionNeeded.push(require(all.root + "/models/adminControl"));
 
 	return (module);
 }

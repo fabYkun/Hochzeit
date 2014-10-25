@@ -1,7 +1,6 @@
 module.exports = function(express, root, production)
 {
 	var module = {};
-	module.production = production;
 	module.root = root;
 
 	var CookieParser = require("cookie-parser");
@@ -30,7 +29,7 @@ module.exports = function(express, root, production)
 	app.set("views", root + "/views");
 	app.set("main", "Blind Test");
 
-	module.io = require("socket.io").listen(app.listen((module.production == true) ? (process.env.VCAP_APP_PORT) : (8080)));
+	module.io = require("socket.io").listen(app.listen(8080));
 
 	var SessionSocket = require("./session.socket.io-express4");
 	module.SessionSockets = new SessionSocket(module.io, SessionStore, CookieParser());

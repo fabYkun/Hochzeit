@@ -12,7 +12,6 @@ module.exports = function(all)
 	require("./autoAuth")(app, models);
 
 	// loading handlers
-
 	var player = require(all.root + "/routes/handler/player")(all);
 	var admin = require(all.root + "/routes/handler/admin")(all);
 	var display = require(all.root + "/routes/handler/display")(all);

@@ -1,10 +1,9 @@
-var production = false;
-var language = "fr";
+var language = "fr"; // default language
 
 var express = require("express");
 var mongoose = require("mongoose");
-var mongo_conf = require("./conf/mongo_configuration")(production);
-var all = require("./conf/configurations")(express, __dirname, production);
+var mongo_conf = require("./conf/mongo_configuration")();
+var all = require("./conf/configurations")(express, __dirname);
 all.app.set("lang", language);
 
 mongoose.connection.on("connected", console.error.bind(console, "DB[root] : connection successful"));

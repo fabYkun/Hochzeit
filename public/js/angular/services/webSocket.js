@@ -2,15 +2,12 @@
 ** Service lançant la connexion en websocket
 
 ** socket.logs permet de récupérer les messages reçus et les afficher dans un controller
-**
-** socket.on("connection") permet, en fonction d'une variable à set dans le <head> d'un document html, 
-** de relancer une nouvelle connexion (fix lié aux proxy n'ayant pas trop confiance aux ws non secure)
 */
+
 angular.module("webSocket", [])
 	.factory("socket", function($rootScope)
 	{
-		var production = false;
-		var socket = io((production) ? "ws://cloudindus.mybluemix.net/" : "localhost:8080");
+		var socket = io("localhost:8080");
 
 		socket.logs = [];
 		socket.countdown = undefined;
@@ -36,12 +33,6 @@ angular.module("webSocket", [])
 				timer(logs.countdown);
 			}
 		}
-
-		socket.on("connection", function()
-		{
-			if (window.ws_reconnect && !(window.ws_reconnect = undefined))
-				socket.close();
-		});
 
 		return (socket);
 	});

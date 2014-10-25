@@ -1,4 +1,4 @@
-module.exports = function(production)
+module.exports = function()
 {
 	var module = {};
 
