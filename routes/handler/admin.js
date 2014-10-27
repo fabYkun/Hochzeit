@@ -11,8 +11,14 @@ module.exports = function(all)
 				title:		"Admin",
 				password:	"Mot de passe",
 				submit:		"Connexion",
-				gamesList:	"Jeux crées",
-				createGame:	"Créer un nouveau jeu",
+				roomList:	"Sessions",
+				newRoomForm:
+				{
+					name:	"Nom",
+					quest:	"Questionnaire associé",
+					create:	"Créer"
+				},
+				newQuest:	"Créer un nouveau questionnaire",
 				lang:		"fr"
 			},
 			"en": {
@@ -20,8 +26,14 @@ module.exports = function(all)
 				title:		"Admin",
 				password:	"Password",
 				submit:		"Connection",
-				gamesList:	"Created games",
-				createGame:	"Create a new game",
+				roomList:	"Rooms",
+				newRoomForm:
+				{
+					name:	"Name",
+					quest:	"Associated questionnaire",
+					create:	"Create"
+				},
+				newQuest:	"Create a new questionnaire",
 				lang:		"en"
 			}
 		};

@@ -12,10 +12,12 @@
 			<logs-block></logs-block>
 			<nav class="square_choices">
 				<article>
-					<h1>{[gamesList]}</h1>
+					<h1>{[roomList]}</h1>
 					<ul>
-						<li ng-repeat="games in gamesList">games.Name</li>
+						<li ng-repeat="room in rooms">{{room.name}} - {{room.state}} - <span class="action" ng-click="deleteRoom(room.name)">Supprimer</span></li>
 					</ul>
+					{[newRoomForm.name]}: <input type="text" ng-model="newRoom.name" maxlength="255" placeholder="{[newRoomForm.name]}" />
+					{[newRoomForm.quest]}: <select ng-model="newRoom.model" ng-options="questionnaire.selected for questionnaire in questionnaires"></select> - <span class="action" ng-click="createRoom()">{[newRoomForm.create]}</span>
 				</article>
 			</nav>
 			<nav class="square_choices">

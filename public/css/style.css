@@ -335,6 +335,13 @@ p {
 	border-bottom-right-radius: 0;
 }
 
+span.action {
+	font-weight: bold;
+	cursor: pointer;
+}
+
+span.action:hover { color: #fff }
+
 /*
 ** Angular css
 */

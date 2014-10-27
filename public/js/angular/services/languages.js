@@ -18,7 +18,8 @@ angular.module("languages", [])
 				{
 					failPassword:	"Mot de passe erroné",
 					emptyPassword:	"Mot de passe inexistant"
-				}
+				},
+				missingData:		"Il manque des informations"
 			},
 			en: {
 				wait:				"Please wait",
@@ -33,7 +34,8 @@ angular.module("languages", [])
 				{
 					failPassword:	"Authentification failed, try again",
 					emptyPassword:	"The password you've send is empty"
-				}
+				},
+				missingData:		"Informations are missing"
 			}
 		};
 		return (languages);

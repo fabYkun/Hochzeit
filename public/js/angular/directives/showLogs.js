@@ -1,7 +1,9 @@
 angular.module("showLogs", ["webSocket", "languages"])
 	.controller("socketLogsCtrl", function($scope, socket, languages)
 	{
-		$scope.closeMsg = languages.closeLogs;
+		var language = document.getElementById("lang").innerHTML || "en";
+
+		$scope.closeMsg = languages[language].closeLogs;
 		$scope.socket = socket;
 		function displayLogs(msg) { $scope.socket.displayLogs($scope, msg) }
 
