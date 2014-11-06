@@ -1,40 +1,52 @@
 module.exports = function(all, socket, session, models)
 {
+	var bcrypt = require(all.root + "/conf/bcrypt");
 	var mongoose = require("mongoose");
 	var users = models.users;
+
+	function bdd_fail(err)
+	{
+		var messages = {
+			"en":	"An error occured",
+			"fr":	"Une erreur est apparue"
+		}
+		console.error("TS: " + Date.now() + " - " + err);
+		socket.emit("err", [{error: true, message: ((session.language && messages[session.language]) ? messages[session.language] : "An error occured") + " (" + err + ")"}]);
+	}
 
 	socket.on("setnewadmin", function(pwd){ setNewAdmin(pwd) });
 	socket.on("adminauth", function(pwd){ adminAuth(pwd) });
 	socket.on("changeLang", function(newLanguage){
-		session.language = newLanguage; // on vérifie dans les handlers si il existe ou pas
+		session.language = newLanguage; // we trust it first and we'll fallback later if not supported
 		session.save();
 		socket.emit("changeLang");
 	});
 
 	function setNewAdmin(password)
 	{
-		var bcrypt = require(all.root + "/conf/bcrypt");
-		bcrypt.genSalt(10, function (err, salt){
-			if (err)
-				return (socket.emit("err"));
+		var messages = {
+			"en":	"New admin registered",
+			"fr":	"Nouvel admin enregistré"
+		}
 
+		if (!session) return;
+		bcrypt.genSalt(10, function (err, salt){
+			if (err) return (bdd_fail(err));
 			bcrypt.hash(password, salt, null, function (err, hash){
 				if (err)
 					return (socket.emit("err"));
 
-				var Admin = mongoose.model("admin");
 				var authCookie = Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-8);
 
-				var newAdmin = new Admin({
+				var newAdmin = new users.AdminSchema({
 					Password: hash,
 					AuthCookie: authCookie
 				});
 				newAdmin.save(function (err){
-					if (err || !session)
-						return (socket.emit("err"));
+					if (err) return (bdd_fail(err));
 					session.admin = {autoAuth: authCookie};
 					session.save();
-					return (socket.emit("success"));
+					return (socket.emit("success", [{message: ((session.language && messages[session.language]) ? messages[session.language] : "Connexion successful")}]));
 				});
 			});
 		});
@@ -42,27 +54,23 @@ module.exports = function(all, socket, session, models)
 
 	function adminAuth(password)
 	{
-		var bcrypt = require(all.root + "/conf/bcrypt");
+		var messages = {
+			"en":	"Connexion successful",
+			"fr":	"Connection réussie"
+		}
 
-		var query = users.AdminSchema.findOne({});
-		query.exec(function(err, user)
+		users.AdminSchema.findOne({}).exec(function(err, user)
 		{
-			if (user)
-			{
-				bcrypt.compare(password, user.Password, function (err, res) {
-
-					if (err == true || res != true)
-						return (socket.emit("err"));
-					else
-					{
-						session.admin = {autoAuth: user.AuthCookie};
-						session.save();
-						return (socket.emit("success"));
-					}
-				});
-			}
-			else
-				return (socket.emit("err"));
+			if (!user) return (socket.emit("err"));
+			bcrypt.compare(password, user.Password, function (err, res) {
+				if (err || !res) return (bdd_fail());
+				else
+				{
+					session.admin = {autoAuth: user.AuthCookie};
+					session.save();
+					return (socket.emit("success", [{message: ((session.language && messages[session.language]) ? messages[session.language] : "Connexion successful")}]));
+				}
+			});
 		});
 	}
 }

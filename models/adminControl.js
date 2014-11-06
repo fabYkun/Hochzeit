@@ -1,15 +1,16 @@
 module.exports = function(all, socket, session, models)
 {
+	var users = models.users;
 	var rooms = models.rooms;
 
 	function bdd_fail(err)
 	{
-		var languages = {
-			"en": "An error occured",
-			"fr": "Une erreur est apparue"
+		var messages = {
+			"en":	"An error occured",
+			"fr":	"Une erreur est apparue"
 		}
 		console.error("TS: " + Date.now() + " - " + err);
-		socket.emit("err", [{error: true, message: ((session.language && languages[session.language]) ? languages[session.language] : "An error occured") + ": " + err}]);
+		socket.emit("err", [{error: true, message: ((session.language && messages[session.language]) ? messages[session.language] : "An error occured") + " (" + err + ")"}]);
 	}
 
 	socket.on("getQuestionnaires", function()
@@ -37,40 +38,33 @@ module.exports = function(all, socket, session, models)
 		});
 	});
 
-	socket.on("getRooms", function()
-	{
-		var i = -1;
-		var package = [];
-		var query = rooms.RoomSchema.find({});
-		query.exec(function(err, result)
-		{
-			if (err) return (bdd_fail(err));
-			if (!result) return;
-			while (result[++i])
-				package.push({name: result[i].Name, state: result[i].State});
-			socket.emit("getRooms", package);
-		});
-	});
-
 	socket.on("deleteRoom", function(name)
 	{
+		var roomID;
 		var messages = {
 			fr: {
-				roomDeleted: "Session détruite",
-				roomDoesntExist: "Cette session n'existait déjà plus"
+				roomDeleted:		"Session détruite",
+				roomDoesntExist:	"Cette session n'existe pas"
 			},
 			en: {
-				roomDeleted: "Room destroyed",
-				roomDoesntExist: "This room is already missing"
+				roomDeleted:		"Room destroyed",
+				roomDoesntExist:	"This room doesn't exist"
 			}
 		};
+
 		var query = rooms.RoomSchema.findOne({Name: name});
 		query.exec(function(err, result){
 			if (err) return (bdd_fail(err));
 			if (!result)
 				return (socket.emit("success", [{message: (session.language && messages[session.language]) ? messages[session.language].roomDoesntExist : "This room is already missing"}]));
+			roomID = result.Identifer;
 			result.remove();
-			return (socket.emit("deleteRoom", name));
+
+			query = users.UsersSchema.remove({Room: roomID});
+			query.exec(function(err){
+				if (err) return (bdd_fail(err));
+				return (socket.emit("deleteRoom", name));
+			});
 		});
 	});
 
@@ -78,26 +72,28 @@ module.exports = function(all, socket, session, models)
 	{
 		var query;
 		var newRoom;
-		var reg = /^[a-zA-Z0-9\[\]\(\)]+$/;
+		var reg = /^[a-z A-Z0-9\[\]\(\)]+$/;
 		var messages = {
 			fr: {
-				incorrectName: "Le nom d'une session ne doit pas comporter d'autres signes que A-Za-z, 0-9, [] et ()",
-				roomAlreadyExists: "Une session comportant ce nom a déjà été crée",
-				questDoesntExist: "Le questionnaire associé n'existe pas",
-				roomCreated: "La session a été créee"
+				incorrectName:		"Le nom d'une session ne doit pas comporter d'autres signes que A-Za-z, 0-9, [] et ()",
+				roomAlreadyExists:	"Une session comportant ce nom a déjà été crée",
+				questDoesntExist:	"Le questionnaire associé n'existe pas",
+				roomCreated:		"La session a été créee"
 			},
 			en: {
-				incorrectName: "Only A-Za-z, 0-9, [] and () symbols are allowed within a room's name",
-				roomAlreadyExists: "A room named this way has already been created",
-				questDoesntExist: "The assigned quest does not seem to exist",
-				roomCreated: "The room has been created"
+				incorrectName:		"Only A-Za-z, 0-9, [] and () symbols are allowed within a room's name",
+				roomAlreadyExists:	"A room named this way has already been created",
+				questDoesntExist:	"The assigned quest does not seem to exist",
+				roomCreated:		"The room has been created"
 			}
 		}
 
 		if (!data.name || !data.model) return;
 		if (!reg.test(data.name))
 			return (socket.emit("err", [{error: true, message: (session.language && messages[session.language]) ? messages[session.language].incorrectName : "Only A-Za-z, 0-9, [] and () symbols are allowed within a room's name"}]));
-		query = rooms.RoomSchema.findOne({Name: data.name});
+		
+		var identifer = Math.random().toString(36).slice(-8);
+		query = rooms.RoomSchema.findOne({$or: [{Name: data.name}, {Identifer: identifer}]});
 		query.exec(function(err, result)
 		{
 			if (err) return (bdd_fail(err));
@@ -117,6 +113,7 @@ module.exports = function(all, socket, session, models)
 					}]));
 				newRoom = new rooms.RoomSchema({
 					Name: data.name,
+					Identifer: identifer,
 					Languages: quest.Languages,
 					Quest: quest.Data,
 					Players: [],
@@ -124,10 +121,56 @@ module.exports = function(all, socket, session, models)
 				});
 				newRoom.save(function(err) {
 					if (err) return (bdd_fail(err));
-					socket.emit("createRoom", {name: data.name, state: "Open"});
+					socket.emit("createRoom", {name: data.name, state: "Open", url: identifer});
 					return (socket.emit("success", [{message: (session.language && messages[session.language]) ? messages[session.language].roomCreated : "The room has been created"}]));
 				});
 			});
+		});
+	});
+
+	socket.on("roomChangeState", function(roomID)
+	{
+		var states = ["Open", "In Game", "Closed"];
+		var index;
+
+		var query = rooms.RoomSchema.findOne({Identifer: roomID});
+		query.exec(function(err, result)
+		{
+			if (err) return (bdd_fail(err));
+			if (!result) return ;
+			index = states.indexOf(result.State) + 1;
+			result.State = states[index] ? states[index] : result.State;
+			result.save(function(err)
+			{
+				if (err) return (bdd_fail(err));
+				socket.to(result.Identifer).emit("stateChanged", result.State);
+				socket.emit("stateChanged", result.State);
+			});
+		});
+	});
+
+	socket.on("nextQuestion", function(roomID)
+	{
+		var query = rooms.RoomSchema.findOne({Identifer: roomID});
+		query.exec(function(err, result)
+		{
+			if (err) return (bdd_fail(err));
+
+			if (!result) return ;
+			if (result.Quest[result.Index + 1])
+			{
+				var i = -1;
+				while (result.Players[++i])
+					if (!result.Players[i].answers[result.Index])
+						result.Players[i].answers[result.Index] = "";
+				++result.Index;
+				result.save(function(err)
+				{
+					if (err) return (bdd_fail(err));
+					socket.to(result.Identifer).emit("nextQuestion");
+					socket.emit("nextQuestion");
+				});
+			}
 		});
 	});
 }

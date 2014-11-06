@@ -7,9 +7,7 @@ module.exports = function()
 	var UsersSchema = new Schema({
 		Pseudo:		String,
 		Room:		String,
-		Points:		Number,
-		AuthCookie:	String,
-		Timestamp:	{type: Date, default: Date.now}
+		AuthCookie:	String
 	});
 	var AdminSchema = new Schema({
 		Password:	String,

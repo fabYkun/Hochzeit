@@ -45,7 +45,7 @@ module.exports = function(all)
 			"en": {
 				main:		app.get("main"),
 				title:		"We can't reach the database",
-				h1title:	"The Database stops responding",
+				h1title:	"Database is not responding... ",
 				paragraph:	"The Database doesn't respond... ",
 				lang:		"en"
 			}

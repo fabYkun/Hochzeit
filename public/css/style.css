@@ -39,9 +39,18 @@ header h1 {
 	font-size: 5em;
 }
 
+header div.info {
+	background-color: #2E3A42;
+	color: #A4A9B9;
+}
+
 @media screen and (max-width: 1000px), @media handheld {
 	header h1 { text-align: center; font-size: 12vw; }
 }
+
+h1 { font-size: 1.2em; margin: 10px; margin-bottom: 20px; }
+
+a.unlink { color: grey; }
 
 section {
 	flex-grow: 1;
@@ -191,12 +200,6 @@ div.ensemble
 	display: inline;
 	padding: 5px 0;
 	color: #383838;
-	background-color: rgba(164, 164, 185, 0.75);
-}
-
-div.ensemble:hover
-{
-	background-color: rgba(164, 164, 185, 0.75);
 }
 
 div.ensemble input, div.ensemble button

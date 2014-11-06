@@ -7,14 +7,14 @@
 	<body ng-controller="adminCtrl">
 		<section>
 			<header>
-				<h1><a href="/">{[title]}</a></h1>
+				<h1><a href="/admin">{[title]}</a></h1>
 			</header>
 			<logs-block></logs-block>
 			<nav class="square_choices">
 				<article>
 					<h1>{[roomList]}</h1>
 					<ul>
-						<li ng-repeat="room in rooms">{{room.name}} - {{room.state}} - <span class="action" ng-click="deleteRoom(room.name)">Supprimer</span></li>
+						<li ng-repeat="room in rooms"><a href="/admin/{{room.url}}">{{room.name}}</a> - {{room.state}} - <span class="action" ng-click="deleteRoom(room.name)">Supprimer</span></li>
 					</ul>
 					{[newRoomForm.name]}: <input type="text" ng-model="newRoom.name" maxlength="255" placeholder="{[newRoomForm.name]}" />
 					{[newRoomForm.quest]}: <select ng-model="newRoom.model" ng-options="questionnaire.selected for questionnaire in questionnaires"></select> - <span class="action" ng-click="createRoom()">{[newRoomForm.create]}</span>
@@ -22,9 +22,21 @@
 			</nav>
 			<nav class="square_choices">
 				<article>
-					<h1>{[createGame]}</h1>
-					<span ng-click="">New BlindTest</span><br />
-					<span ng-click="">New MC</span>
+					<h1>{[newQuest]}</h1>
+					<form action="/upload" enctype="multipart/form-data" method="post">
+						<label><div class="input-rounded-groups">
+							<span class="radius left">{[newRoomForm.name]}</span><input type="text" name="title" class="radius right" maxlength="255" required="required" />
+						</div></label>
+						<label><div class="input-rounded-groups">
+							<span class="radius left">{[newRoomForm.languages]}</span><input type="text" name="lang" class="radius right" maxlength="255" required="required" placeholder="fr, en, de, ..." />
+						</div></label>
+						<div class="input-rounded-groups button" ng-cloak>
+							<div class="ensemble radius">
+								<input type="file" name="upload" required="required" >
+								<button class="radius" type="submit">upload</button>
+							</div>
+						</div>
+					</form>
 				</article>
 			</nav>
 		</section>

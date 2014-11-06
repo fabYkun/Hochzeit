@@ -1,7 +1,7 @@
 var adminAuth = angular.module("adminAuth", ["webSocket", "languages", "showLogs", "switchLanguage"]);
 
 adminAuth.controller("adminAuthCtrl", function ($scope, socket, languages){
-	$scope.language = document.getElementById("lang").innerHTML || "en";
+	$scope.language = document.getElementById("lang").textContent || "en";
 	$scope.password = "";
 
 	$scope.connexion = function()

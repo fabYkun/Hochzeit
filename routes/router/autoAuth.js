@@ -24,26 +24,51 @@ module.exports = function(app, models)
 		next();
 	});
 
-	// connect you if the authCookie is available
+	// connects you if the authCookie is available
 	app.use(function (req, res, next){
-		if (req.session && !req.session.user && req.cookies.userAutoAuth)
+
+		function searchAdmin(auth, callback)
 		{
-			var query = UserModel.UsersSchema.findOne({AuthCookie: req.cookies.userAutoAuth});
-			query.exec(function(err, user)
+			var query;
+
+			if (req.session && !req.session.admin && auth)
 			{
-				if (user)
-					req.session.user = user;
-			});
+				query = UserModel.AdminSchema.findOne({AuthCookie: auth});
+				query.exec(function(err, admin)
+				{
+					if (err) console.error("TS: " + Date.now() + " - " + err);
+					else if (admin) req.session.admin = {autoAuth: admin.AuthCookie};
+					callback();
+				});
+			}
+			else return (callback())
 		}
-		if (req.session && !req.session.admin && req.cookies.adminAutoAuth)
+
+		function searchUser(auth, callback)
 		{
-			var query = UserModel.AdminSchema.findOne({AuthCookie: req.cookies.adminAutoAuth});
-			query.exec(function(err, admin)
+			var query;
+
+			if (req.session && !req.session.user && auth)
 			{
-				if (admin)
-					req.session.admin = true;
-			});
+				query = UserModel.UsersSchema.findOne({AuthCookie: auth});
+				query.exec(function(err, user)
+				{
+					if (err) console.error("TS: " + Date.now() + " - " + err);
+					else if (user)
+					{
+						req.session.user =
+						{
+							authCookie:	user.AuthCookie,
+							"pseudo":	user.Pseudo,
+							room:		user.Room
+						}
+					}
+					return (callback(req.cookies.adminAutoAuth, next));
+				});
+			}
+			else return (callback(req.cookies.adminAutoAuth, next));
 		}
-		next();
+
+		searchUser(req.cookies.userAutoAuth, searchAdmin);
 	});
 }
