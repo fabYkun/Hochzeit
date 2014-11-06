@@ -88,7 +88,18 @@ module.exports = function(all, socket, session, models)
 
 	socket.on("buzzer", function()
 	{
-		socket.to(room.Identifer).emit("buzzer", session.user.pseudo);
-		socket.emit("hasBuzzed");
+		if (!session.user || !session.user.pseudo || !session.user.room) return (bdd_fail("Session expired"));
+		var query = rooms.RoomSchema.findOne({Identifer: session.user.room});
+		query.exec(function(err, room)
+		{
+			if (err) return (bdd_fail(err));
+			if (room.Buzzer) return;
+			room.Buzzer = session.user.pseudo;
+			room.save(function(err)
+			{
+				socket.to(session.user.room).emit("buzzer", session.user.pseudo);
+				socket.emit("buzzer", session.user.pseudo);
+			});
+		});
 	});
 }

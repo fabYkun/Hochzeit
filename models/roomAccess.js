@@ -62,6 +62,7 @@ module.exports = function(all, socket, session, models)
 					index:		result.Index,
 					players:	result.Players,
 					state:		result.State,
+					buzzer:		result.Buzzer,
 					created:	result.Created
 				});
 		});
@@ -98,6 +99,7 @@ module.exports = function(all, socket, session, models)
 					index:		result.Index,
 					players:	result.Players,
 					state:		result.State,
+					buzzer:		result.Buzzer,
 					created:	result.Created
 				});
 		});

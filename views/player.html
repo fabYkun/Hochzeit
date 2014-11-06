@@ -10,6 +10,7 @@
 				<h1><a href="/">{[title]}</a></h1>
 			</header>
 			<logs-block></logs-block>
+			<div class="blackscreen" ng-show="buzzerName">{{buzzerName}}</div>
 			<nav class="square_choices" ng-show="room.state == 'Open'">
 				<article>
 					<h1>{[title]}</h1>
@@ -23,6 +24,7 @@
 					<ul>
 						<li ng-repeat="answer in room.quest[room.index].languageAnswers"><a ng-class="{unlink: !canRespond}" ng-click="sendAnswer(answer)">{{answer}}</a></li>
 					</ul>
+					<div ng-hide="room.quest[room.index].languageAnswers"><a ng-click="buzzer()">Buzzer !!</a></div>
 				</article>
 			</nav>
 			<nav class="square_choices" ng-show="room.state == 'Closed'">

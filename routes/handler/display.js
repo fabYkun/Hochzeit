@@ -28,6 +28,8 @@ module.exports = function(all)
 					current: "Question en cours",
 					time: "Temps"
 				},
+				pauseMusic:	"Arrêter la musique",
+				playMusic:	"Jouer",
 				results:	"Résultats",
 				winner:		"Gagnant",
 				lang:		"fr"
@@ -51,6 +53,8 @@ module.exports = function(all)
 					current: "Current question",
 					time: "Time"
 				},
+				pauseMusic:	"Pause the song",
+				playMusic:	"Play",
 				results:	"Results",
 				winner:		"Winner",
 				lang:		"en"

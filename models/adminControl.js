@@ -149,7 +149,7 @@ module.exports = function(all, socket, session, models)
 		});
 	});
 
-	socket.on("nextQuestion", function(roomID)
+	function nextQuestion(roomID)
 	{
 		var query = rooms.RoomSchema.findOne({Identifer: roomID});
 		query.exec(function(err, result)
@@ -164,13 +164,53 @@ module.exports = function(all, socket, session, models)
 					if (!result.Players[i].answers[result.Index])
 						result.Players[i].answers[result.Index] = "";
 				++result.Index;
+				result.Buzzer = "";
 				result.save(function(err)
 				{
 					if (err) return (bdd_fail(err));
+					socket.to(roomID).emit("buzzer", "");
+					socket.emit("buzzer", "");
 					socket.to(result.Identifer).emit("nextQuestion");
 					socket.emit("nextQuestion");
 				});
 			}
+		});
+	}
+
+	socket.on("nextQuestion", nextQuestion);
+	socket.on("addPts", function(roomID, pseudo, points)
+	{
+		var query = rooms.RoomSchema.findOne({Identifer: roomID});
+		query.exec(function(err, room)
+		{
+			if (err || !room) return (bdd_fail(err || "Room has expired"));
+			var i = -1;
+
+			while (room.Players[++i] && room.Players[i].pseudo != pseudo);
+			if (!room.Players[i]) return (bdd_fail("Session has expired"));
+			room.Players[i].points += points;
+			room.Buzzer = undefined;
+			room.save(function(err)
+			{
+				if (err) return (bdd_fail(err));
+				return (nextQuestion(roomID));
+			});
+		});
+	});
+
+	socket.on("denyBuzzer", function(roomID)
+	{
+		var query = rooms.RoomSchema.findOne({Identifer: roomID});
+		query.exec(function(err, room)
+		{
+			if (err || !room) return (bdd_fail(err || "Room has expired"));
+			room.Buzzer = undefined;
+			room.save(function(err)
+			{
+				if (err) return (bdd_fail(err));
+				socket.to(roomID).emit("buzzer", "");
+				socket.emit("buzzer", "");
+			});
 		});
 	});
 }

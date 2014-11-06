@@ -36,6 +36,8 @@ module.exports = function(all)
 				},
 				results:	"Résultats",
 				winner:		"Gagnant",
+				addPts:		"Ajouter",
+				denyBuzzer:	"Refuser",
 				lang:		"fr"
 			},
 			"en": {
@@ -67,6 +69,8 @@ module.exports = function(all)
 				},
 				results:	"Results",
 				winner:		"Winner",
+				addPts:		"Add",
+				denyBuzzer:	"Deny",
 				lang:		"en"
 			}
 		};

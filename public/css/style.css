@@ -405,3 +405,34 @@ p.warning, p.error, div.logs.warning, div.logs.error {
 	background-repeat: no-repeat;
 	background-origin: content-box;
 }
+
+.blackscreen {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.9);
+	color: white;
+	text-align: center;
+	padding-top: 40vh;
+	font-size: 6vw;
+}
+
+.correct { background-color: green}
+.buzz { background-color: #2E3A42; color: #A4A9B9;}
+
+ul.ingame { padding: 0; margin-left: -15px; margin-right: -15px; }
+ul.ingame li { margin: 0; padding: 0 15px; list-style-type: none; }
+ul.ingame li.buzz input
+{
+	margin: 0 15px;
+	border: none;
+	background: rgba(255, 255, 255, 0.2);
+	color: white;
+}
+ul.ingame li.buzz a { color: #DADADD; }
+ul.ingame li.buzz a:hover { color: white; }
+
+.buzz span { padding: 0 10px }
+.buzz a { padding: 0 3px }

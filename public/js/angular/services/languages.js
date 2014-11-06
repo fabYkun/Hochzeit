@@ -8,6 +8,8 @@ angular.module("languages", [])
 			fr: {
 				wait:				"Veuillez patienter",
 				closeLogs:			"Fermer les alertes",
+				responded:			"Répondu",
+				waitingForAnswers:	"En attente de réponse",
 				failServer:			"Une erreur est intervenu sur le serveur",
 				newAdmin:
 				{
@@ -24,6 +26,8 @@ angular.module("languages", [])
 			en: {
 				wait:				"Please wait",
 				closeLogs:			"Close",
+				responded:			"Responded",
+				waitingForAnswers:	"Waiting for an answer",
 				failServer:			"An error was caught during the process",
 				newAdmin:
 				{

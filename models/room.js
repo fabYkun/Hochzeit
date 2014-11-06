@@ -58,6 +58,7 @@ module.exports = function()
 			points:			Number,
 			answers:		[String]
 		}],
+		Buzzer:				String,
 		State:				String,
 		Created:			{type: Date, default: Date.now}
 	});

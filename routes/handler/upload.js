@@ -72,7 +72,7 @@ module.exports = function(all, roomsModel)
 
 					function checkMedias(media, index)
 					{
-						fs.exists("/media/" + medias[index], function (exists) {
+						fs.exists(all.root + "/public/media/" + medias[index], function (exists) {
 							if (!exists) console.log("Warning[" + warning++ + "]: " + medias[index] + " does not exist");
 							if (media[++index]) return (checkMedias(media, index));
 							return (console.log('\n - Warning found for "' + name + '": ' + warning + "\n\n"));

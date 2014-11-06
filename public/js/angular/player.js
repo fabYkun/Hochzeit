@@ -2,6 +2,7 @@ var playerApp = angular.module("playerApp", ["webSocket", "languages", "showLogs
 
 playerApp.controller("playerCtrl", function ($scope, socket, languages){
 	$scope.language = document.getElementById("lang").textContent || "en";
+	$scope.buzzerName;
 	$scope.pseudo = "";
 	$scope.room = {};
 	$scope.canRespond = true;
@@ -14,6 +15,7 @@ playerApp.controller("playerCtrl", function ($scope, socket, languages){
 		var j;
 		var k;
 
+		if (room.buzzer) $scope.buzzerName = room.buzzer;
 		$scope.languageIndex = room.languages.indexOf($scope.language) ? room.languages.indexOf($scope.language) : 0;
 		while (room.quest[++i])
 		{
@@ -53,4 +55,15 @@ playerApp.controller("playerCtrl", function ($scope, socket, languages){
 		if ($scope.room.quest[$scope.room.index].answers.indexOf(answer) >= 0 && $scope.canRespond)
 			socket.emit("sendAnswer", $scope.room.index, answer);
 	};
+
+	$scope.buzzer = function()
+	{
+		socket.emit("buzzer");
+	};
+
+	socket.on("buzzer", function(name)
+	{
+		$scope.buzzerName = name;
+		$scope.$apply();
+	});
 });

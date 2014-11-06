@@ -6,6 +6,8 @@ adminRoomApp.controller("adminRoomCtrl", function ($scope, socket, languages){
 	$scope.room = {};
 	$scope.languageIndex = 0;
 	$scope.conclusion = {};
+	$scope.buzzerName;
+	$scope.addPts = 0;
 	var roomID = document.getElementById("roomID").textContent;
 
 	$scope.changeState = function(){ socket.emit("roomChangeState", roomID); };
@@ -43,6 +45,8 @@ adminRoomApp.controller("adminRoomCtrl", function ($scope, socket, languages){
 	{
 		$scope.room = room;
 		$scope.languageIndex = room.languages.indexOf($scope.language) ? room.languages.indexOf($scope.language) : 0;
+		$scope.buzzerName = room.buzzer;
+		$scope.addPts = room.quest[room.index].points;
 		if (room.state == "Closed") makeConclusions();
 		$scope.$apply();
 	});
@@ -50,6 +54,7 @@ adminRoomApp.controller("adminRoomCtrl", function ($scope, socket, languages){
 	$scope.nextQuestion = function() { socket.emit("nextQuestion", roomID); }
 	socket.on("nextQuestion", function(){
 		++$scope.room.index;
+		$scope.addPts = $scope.room.quest[$scope.room.index].points;
 		var i = -1;
 		while ($scope.room.players[++i])
 			$scope.room.players[i].correctAnswer = undefined;
@@ -78,6 +83,23 @@ adminRoomApp.controller("adminRoomCtrl", function ($scope, socket, languages){
 
 	socket.on("buzzer", function(pseudo)
 	{
-		// TODO
+		$scope.buzzerName = pseudo;
+		$scope.$apply();
 	});
+
+	$scope.addPoints = function(pseudo)
+	{
+		console.log($scope.addPts)
+		socket.emit("addPts", roomID, pseudo, $scope.addPts);
+	};
+
+	$scope.denyBuzzer = function()
+	{
+		socket.emit("denyBuzzer", roomID);
+	}
+
+	$scope.points = function(add)
+	{
+		$scope.addPts += add;
+	}
 });
