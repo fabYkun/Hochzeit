@@ -7,15 +7,23 @@
 	<body ng-controller="playerCtrl">
 		<section>
 			<header>
-				<h1><a href="/">{[title]}</a></h1>
+				<h1><a href="/">{{room.state == 'In Game' ? languages[language].inGame : languages[language].registrationSuccessful}}</a></h1>
 			</header>
 			<logs-block></logs-block>
-			<div class="blackscreen" ng-show="buzzerName">{{buzzerName}}</div>
+			<div class="blackscreen" ng-show="buzzerName">
+				<div>
+					{{buzzerName}}
+				</div>
+				<div>
+					<img ng-src="/images/avatars/{{buzzerImg}}.jpg" />
+				</div>
+			</div>
 			<nav class="square_choices" ng-show="room.state == 'Open'">
 				<article>
 					<h1>{[title]}</h1>
-					<p>{[prepare]}</p>
-					{[pseudo]}: <input type="text" ng-model="pseudo" placeholder="{[randPseudo]}" /><a ng-click="changePseudo()"> - {[change]}</a>
+					<p>
+						{[assignedP]} <strong>{[randPseudo]}</strong> ! {[affirmativ]}
+					</p>
 				</article>
 			</nav>
 			<nav class="square_choices" ng-show="room.state == 'In Game'">

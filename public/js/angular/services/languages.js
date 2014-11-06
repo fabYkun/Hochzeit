@@ -21,7 +21,10 @@ angular.module("languages", [])
 					failPassword:	"Mot de passe erroné",
 					emptyPassword:	"Mot de passe inexistant"
 				},
-				missingData:		"Il manque des informations"
+				missingData:		"Il manque des informations",
+				noNextQuestion:		"Il n'y a plus de questions, appuyez sur Entrer pour fermer la salle",
+				registrationSuccessful: "Inscription réussie !",
+				inGame:				"En jeu"
 			},
 			en: {
 				wait:				"Please wait",
@@ -39,7 +42,10 @@ angular.module("languages", [])
 					failPassword:	"Authentification failed, try again",
 					emptyPassword:	"The password you've send is empty"
 				},
-				missingData:		"Informations are missing"
+				missingData:		"Informations are missing",
+				noNextQuestion:		"There is no more questions left, press Enter to close the room",
+				registrationSuccessful: "Registration successful !",
+				inGame:				"In game"
 			}
 		};
 		return (languages);

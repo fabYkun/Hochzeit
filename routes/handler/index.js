@@ -10,6 +10,7 @@ module.exports = function(all)
 				main:		app.get("main"),
 				title:		"Sélection d'un jeu en cours",
 				rooms:		"Salles disponibles",
+				views:		"Salles visibles",
 				join:		"Rejoindre",
 				lang:		"fr"
 			},
@@ -17,6 +18,7 @@ module.exports = function(all)
 				main:		app.get("main"),
 				title:		"Current game selection",
 				rooms:		"Rooms available",
+				views:		"Salles visibles",
 				join:		"Join",
 				lang:		"en"
 			}

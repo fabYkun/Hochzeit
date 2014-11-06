@@ -51,7 +51,13 @@ adminRoomApp.controller("adminRoomCtrl", function ($scope, socket, languages){
 		$scope.$apply();
 	});
 
-	$scope.nextQuestion = function() { socket.emit("nextQuestion", roomID); }
+	$scope.nextQuestion = function()
+	{
+		if (!$scope.room.quest[$scope.room.index + 1] && confirm(languages[$scope.language].noNextQuestion))
+			$scope.changeState();
+		else
+			socket.emit("nextQuestion", roomID);
+	}
 	socket.on("nextQuestion", function(){
 		++$scope.room.index;
 		$scope.addPts = $scope.room.quest[$scope.room.index].points;
@@ -89,7 +95,6 @@ adminRoomApp.controller("adminRoomCtrl", function ($scope, socket, languages){
 
 	$scope.addPoints = function(pseudo)
 	{
-		console.log($scope.addPts)
 		socket.emit("addPts", roomID, pseudo, $scope.addPts);
 	};
 

@@ -24,6 +24,7 @@ module.exports = function(all, socket, session, models)
 			"fr":	"Pseudo changé"
 		};
 
+		if (!pseudo || pseudo.length > 3) return (socket.emit("success", [{message: ((session.language && success[session.language]) ? success[session.language] : "Pseudo too short")}]));
 		if (!session.user || !session.user.pseudo || !session.user.room) return;
 		var query = users.UsersSchema.findOne({Pseudo: pseudo, Room: session.user.room});
 		query.exec(function(err, result)

@@ -14,12 +14,14 @@ module.exports = function(all, socket, session, models)
 
 	socket.on("getRooms", function(state)
 	{
-		var query = rooms.RoomSchema.find((state) ? {State: "Open"} : {});
+		var possibilities = ["Open", "In Game", "Closed"];
 		var package = [];
 		var tmp;
 		var i = -1;
 		var j;
 
+		if (state && possibilities.indexOf(state) < 0) return ;
+		var query = rooms.RoomSchema.find((state) ? {State: state} : {});
 		query.exec(function(err, result)
 		{
 			if (err) return (bdd_fail(err));

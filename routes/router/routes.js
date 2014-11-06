@@ -110,7 +110,7 @@ module.exports = function(all)
 
 	function setUser(req, res, next)
 	{
-		var randPseudo = ["Jesus", "Pikachu", "Jean-Pierre Foucault", "Julien Leperse", "Nana", "Popo", "Jessy", "James", "Miaouss", "Abath", "Lemuria", "Chtupu"];
+		var randPseudo = ["Chewbacca", "Grotadmorv", "Derrick", "Julien Le Perse", "Gai Maito", "Pandakun", "Giga Puddy", "Sailor Moon", "Chtulhu", "Severus Snape"];
 		var roomID = req.params.room ? req.params.room : "";
 		var query = rooms.RoomSchema.findOne({Identifer: roomID});
 
@@ -118,6 +118,7 @@ module.exports = function(all)
 		query.exec(function(err, result)
 		{
 			if (err || !result) return (bdd_fail(err || "Attempt to reach "+roomID+": room undefined", res));
+			if (result.State != "Open") return (bdd_fail("Room is private", res));
 			var attemps = 100;
 			var pseudo;
 			var i;
@@ -162,11 +163,25 @@ module.exports = function(all)
 		});
 	}
 
+	function isInRoom(req, res, next)
+	{
+		if (!req.session.user || !req.session.user.room || !req.session.user.pseudo) return (next());
+
+		var query = rooms.RoomSchema.findOne({Identifer: req.session.user.room, State: "In Game"});
+		query.exec(function(err, result)
+		{
+			if (err) return (bdd_fail(err));
+			else if (result) return (res.redirect("/player/" + req.session.user.room));
+			req.session.user = undefined;
+			return (next());
+		});
+	}
+
 	app.use(setLanguage);
-	app.get("/", adminIsSet, index.regular);
-	app.get("/admin/:room", isAdmin, admin.room);
+	app.get("/", adminIsSet, isInRoom, index.regular);
+	app.get("/admin/:room", adminIsSet, isAdmin, admin.room);
 	app.get("/admin", adminIsSet, admin.regular);
-	app.get("/player/:room", verifyRoom, setUser, player.regular);
+	app.get("/player/:room", adminIsSet, verifyRoom, setUser, player.regular);
 	app.get("/display/:room", adminIsSet, display.regular);
 	app.get("/setadmin", adminIsntSet, admin.new);
 	app.post("/upload", adminIsSet, upload.quest, admin.regular);

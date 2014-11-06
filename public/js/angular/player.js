@@ -3,9 +3,11 @@ var playerApp = angular.module("playerApp", ["webSocket", "languages", "showLogs
 playerApp.controller("playerCtrl", function ($scope, socket, languages){
 	$scope.language = document.getElementById("lang").textContent || "en";
 	$scope.buzzerName;
+	$scope.buzzerImg;
 	$scope.pseudo = "";
 	$scope.room = {};
 	$scope.canRespond = true;
+	$scope.languages = languages;
 
 	$scope.changePseudo = function() { socket.emit("changePseudo", $scope.pseudo); };
 	socket.emit("getMyRoom");
@@ -15,7 +17,9 @@ playerApp.controller("playerCtrl", function ($scope, socket, languages){
 		var j;
 		var k;
 
-		if (room.buzzer) $scope.buzzerName = room.buzzer;
+		$scope.buzzerName = room.buzzer;
+		if ($scope.buzzerName)
+			$scope.buzzerImg = $scope.buzzerName.replace(/ /g, "-").toLowerCase();
 		$scope.languageIndex = room.languages.indexOf($scope.language) ? room.languages.indexOf($scope.language) : 0;
 		while (room.quest[++i])
 		{
@@ -63,7 +67,8 @@ playerApp.controller("playerCtrl", function ($scope, socket, languages){
 
 	socket.on("buzzer", function(name)
 	{
-		$scope.buzzerName = name;
+		if (($scope.buzzerName = name))
+			$scope.buzzerImg = $scope.buzzerName.replace(/ /g, "-").toLowerCase();
 		$scope.$apply();
 	});
 });

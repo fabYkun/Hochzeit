@@ -12,9 +12,11 @@ module.exports = function(all)
 				main:		app.get("main"),
 				roomID:		req.params.room,
 				randPseudo:	req.session.user.pseudo,
-				title:		"Préparations",
+				title:		"Inscription réussie",
 				prepare: 	"Préparations avant le commencement du commencement (vous n'aurez pas le temps (en fait vous ne pourrez pas) de modifier ces informations plus tard). ",
-				pseudo:		"Votre blaze",
+				pseudo:		"Pseudo",
+				assignedP:	"Vous vous appellerez... ",
+				affirmativ:	"mmh, ouais. Ça colle bien à votre personnalité !",
 				change: 	"Changer",
 				question:
 				{
@@ -30,9 +32,11 @@ module.exports = function(all)
 				main:		app.get("main"),
 				roomID:		req.params.room,
 				randPseudo:	req.session.user.pseudo,
-				title:		"Prepare for an epic competition",
+				title:		"Registration successful",
 				prepare: 	"Prepare yourself before the begining of the begining (you won't have the time next (well yes it's not implemented))",
 				pseudo:		"Aka",
+				assignedP:	"Quesapelorio... ",
+				affirmativ:	"mmh, yeah. It fits you !",
 				change: 	"Change",
 				question:
 				{
