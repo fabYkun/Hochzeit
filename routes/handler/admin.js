@@ -17,7 +17,7 @@ module.exports = function(all)
 					name: "Nom de la salle",
 					status: "Status de la salle"
 				},
-				players: "Participant(s)",
+				players: 	"Participant(s)",
 				"roomID":	roomID,
 				wait:		"Veuillez patienter... ",
 				waitP:		"Nous récupérons les informations sur la session. ",
@@ -48,7 +48,7 @@ module.exports = function(all)
 					name: "Room's name",
 					status: "Room's status"
 				},
-				players: "Player(s)",
+				players: 	"Player(s)",
 				"roomID":	roomID,
 				wait:		"Please wait... ",
 				waitP:		"We are collecting the informations of the room. ",

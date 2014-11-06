@@ -167,7 +167,7 @@ module.exports = function(all)
 	app.get("/admin/:room", isAdmin, admin.room);
 	app.get("/admin", adminIsSet, admin.regular);
 	app.get("/player/:room", verifyRoom, setUser, player.regular);
-	app.get("/display", adminIsSet, display.regular);
+	app.get("/display/:room", adminIsSet, display.regular);
 	app.get("/setadmin", adminIsntSet, admin.new);
 	app.post("/upload", adminIsSet, upload.quest, admin.regular);
 	require("./errors")(all);
