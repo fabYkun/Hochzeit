@@ -122,7 +122,6 @@ module.exports = function(all, socket, session, models)
 				newRoom.save(function(err) {
 					if (err) return (bdd_fail(err));
 					socket.emit("createRoom", {name: data.name, state: "Open", url: identifer});
-					return (socket.emit("success", [{message: (session.language && messages[session.language]) ? messages[session.language].roomCreated : "The room has been created"}]));
 				});
 			});
 		});
@@ -193,7 +192,19 @@ module.exports = function(all, socket, session, models)
 			room.save(function(err)
 			{
 				if (err) return (bdd_fail(err));
-				return (nextQuestion(roomID));
+				socket.to(roomID).emit("buzzer", "");
+				socket.emit("getRoom",
+				{
+					name:		room.Name,
+					languages:	room.Languages,
+					identifer:	room.Identifer,
+					quest:		room.Quest,
+					index:		room.Index,
+					players:	room.Players,
+					state:		room.State,
+					buzzer:		room.Buzzer,
+					created:	room.Created
+				});
 			});
 		});
 	});

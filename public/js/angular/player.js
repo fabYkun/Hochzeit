@@ -8,7 +8,10 @@ playerApp.controller("playerCtrl", function ($scope, socket, languages){
 	$scope.room = {};
 	$scope.canRespond = true;
 	$scope.languages = languages;
+	$scope.title = languages[$scope.language].wait;
+	navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate;
 
+	window.setTimeout(function() { window.location.reload(true) }, (Math.round((Math.random() * 10) % 10) * 1000) + 25000);
 	$scope.changePseudo = function() { socket.emit("changePseudo", $scope.pseudo); };
 	socket.emit("getMyRoom");
 	socket.on("getRoom", function(room)
@@ -17,19 +20,23 @@ playerApp.controller("playerCtrl", function ($scope, socket, languages){
 		var j;
 		var k;
 
-		$scope.buzzerName = room.buzzer;
-		if ($scope.buzzerName)
-			$scope.buzzerImg = $scope.buzzerName.replace(/ /g, "-").toLowerCase();
-		$scope.languageIndex = room.languages.indexOf($scope.language) ? room.languages.indexOf($scope.language) : 0;
-		while (room.quest[++i])
+		$scope.title = languages[$scope.language].room[room.state];
+		if (room.state != "Closed")
 		{
-			j = $scope.languageIndex * (room.languages.length ? (room.quest[i].answers.length / room.languages.length) : 1);
-			k = ($scope.languageIndex + 1) * (room.languages.length ? (room.quest[i].answers.length / room.languages.length) : 1);
-			room.quest[i].languageAnswers = [];
-			while (room.quest[i].answers[j] && j < k)
+			$scope.buzzerName = room.buzzer;
+			if ($scope.buzzerName)
+				$scope.buzzerImg = $scope.buzzerName.replace(/ /g, "-").toLowerCase();
+			$scope.languageIndex = room.languages.indexOf($scope.language) ? room.languages.indexOf($scope.language) : 0;
+			while (room.quest[++i])
 			{
-				room.quest[i].languageAnswers.push(room.quest[i].answers[j]);
-				++j;
+				j = $scope.languageIndex * (room.languages.length ? (room.quest[i].answers.length / room.languages.length) : 1);
+				k = ($scope.languageIndex + 1) * (room.languages.length ? (room.quest[i].answers.length / room.languages.length) : 1);
+				room.quest[i].languageAnswers = [];
+				while (room.quest[i].answers[j] && j < k)
+				{
+					room.quest[i].languageAnswers.push(room.quest[i].answers[j]);
+					++j;
+				}
 			}
 		}
 		$scope.room = room;
@@ -68,7 +75,10 @@ playerApp.controller("playerCtrl", function ($scope, socket, languages){
 	socket.on("buzzer", function(name)
 	{
 		if (($scope.buzzerName = name))
+		{
 			$scope.buzzerImg = $scope.buzzerName.replace(/ /g, "-").toLowerCase();
+			if (navigator.vibrate) navigator.vibrate(500);
+		}
 		$scope.$apply();
 	});
 });

@@ -13,31 +13,32 @@
 				</div>
 			</header>
 			<logs-block></logs-block>
-			<div class="blackscreen" ng-show="buzzerName">{{buzzerName}}</div>
-			<nav class="square_choices" ng-show="room.state == 'In Game'">
-				<article>
-					<h1>{[question.current]}: «{{room.quest[room.index].question[languageIndex]}}»</h1>
-					<a ng-click="pauseMusic()">{[pauseMusic]}</a><br />
-					<a ng-click="playMusic()">{[playMusic]}</a>
-				</article>
-			</nav>
+			<div class="blackscreen" ng-show="buzzerName">
+				<div>
+					{{buzzerName}}
+				</div>
+				<div>
+					<img ng-src="/images/avatars/{{buzzerImg}}.jpg" />
+				</div>
+			</div>
 			<nav class="square_choices" ng-show="room.state == 'In Game' || room.state == 'Open'">
-				<article>
-					<h1>{[players]} ({{room.players.length}})</h1>
-					<ul>	
-						<li ng-repeat="player in room.players"><strong>{{player.pseudo}}</strong> {{player.answers[room.index] ? languages[language].responded : languages[language].waitingForAnswers}} ({{player.points}}pts)</li>
-					</ul>
+				<ul ng-repeat="player in room.players">
+					<li><strong>{{player.pseudo}}</strong></li>
+					<li><img ng-src="/images/avatars/{{player.img}}.jpg" /></li>
+					<li class="display">{{player.points}}pts</li>
+				</ul>
+			</nav>
+			<nav class="square_choices" ng-show="room.state == 'In Game'">
+				<article class="hide">
+					<a ng-click="stopMusic()">Toujours arrêter la musique</a> - <a ng-click="pauseMusic()">{[pauseMusic]}</a> - <a ng-click="playMusic()">{[playMusic]}</a>
 				</article>
 			</nav>
 			<nav class="square_choices" ng-show="room.state == 'Closed'">
-				<article>
-					<h1>{[results]}</h1>
-					<ul>
-						<li ng-repeat="player in conclusion.winners">
-							<strong>{{player.pseudo}}</strong> ({{player.points}}{[player.points]})
-						</li>
-					</ul>
-				</article>
+				<ul ng-repeat="player in conclusion.winners">
+					<li><strong>{{player.pseudo}}</strong></li>
+					<li><img ng-src="/images/avatars/{{player.img}}.jpg" /></li>
+					<li class="display">{{player.points}}pts</li>
+				</ul>
 			</nav>
 		</section>
 		{% include "./modules/footer.html" %}

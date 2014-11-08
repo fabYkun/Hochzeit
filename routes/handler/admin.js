@@ -144,10 +144,7 @@ module.exports = function(all)
 		res.render("setnewadmin", swig[((req.session && req.session.language && swig[req.session.language]) ? req.session.language : app.get("lang"))]);
 	}
 
-	module.sessionNeeded = []; // listeners
-	module.sessionNeeded.push(require(all.root + "/models/admin"));
-	module.sessionNeeded.push(require(all.root + "/models/adminControl"));
-	module.sessionNeeded.push(require(all.root + "/models/roomAccess"));
+	module.sessionNeeded = [];
 
 	return (module);
 }

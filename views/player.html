@@ -1,13 +1,13 @@
 <!DOCTYPE HTML>
 <html ng-app="playerApp">
 	<head>
-		<title>{[main]} - {[title]}</title>
+		<title>{[main]}{{room.name ? ": " + room.name : ""}}</title>
 		{% include "./modules/header.html" %}
 	</head>
 	<body ng-controller="playerCtrl">
 		<section>
 			<header>
-				<h1><a href="/">{{room.state == 'In Game' ? languages[language].inGame : languages[language].registrationSuccessful}}</a></h1>
+				<h1><a href="/">{{title}}</a></h1>
 			</header>
 			<logs-block></logs-block>
 			<div class="blackscreen" ng-show="buzzerName">
@@ -28,17 +28,17 @@
 			</nav>
 			<nav class="square_choices" ng-show="room.state == 'In Game'">
 				<article>
-					<h1>{[question.current]}: «{{room.quest[room.index].question[languageIndex]}}»</h1>
-					<ul>
+					<h1>{{room.quest[room.index].question[languageIndex]}}</h1>
+					<ul ng-show="room.quest[room.index].languageAnswers">
 						<li ng-repeat="answer in room.quest[room.index].languageAnswers"><a ng-class="{unlink: !canRespond}" ng-click="sendAnswer(answer)">{{answer}}</a></li>
 					</ul>
-					<div ng-hide="room.quest[room.index].languageAnswers"><a ng-click="buzzer()">Buzzer !!</a></div>
+					<div class="buzzer" ng-hide="room.quest[room.index].languageAnswers" ng-click="buzzer()">Buzzer !</div>
 				</article>
 			</nav>
 			<nav class="square_choices" ng-show="room.state == 'Closed'">
 				<article>
 					<h1>{[closed]}</h1>
-					<p>{[closedP]}: <a ng-href="/view/{{room.identifer}}">{[view]}</a></p>
+					<p>{[closedP]}: <a ng-href="/display/{{room.identifer}}">{[view]}</a></p>
 				</article>
 			</nav>
 		</section>

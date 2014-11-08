@@ -8,9 +8,8 @@ indexApp.controller("indexCtrl", function ($scope, socket, languages){
 	socket.emit("getRooms", "Open");
 	socket.emit("getRooms", "In Game");
 	socket.on("getRooms", function(list){
-		console.log(list[0]);
 		if (list[0] && list[0].state == "Open") $scope.rooms = list;
-		else if (list[0] && list[0].state == "In Game") $scope.views = list;
+		$scope.views = $scope.views.concat(list);
 		$scope.$digest();
 	});
 });

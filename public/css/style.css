@@ -30,6 +30,7 @@ body {
 }
 
 header {
+	text-align: center;
 	min-height: 10px;
 	background-color: #a4a9b9;
 }
@@ -78,12 +79,32 @@ article, aside {
 	width: auto;
 }
 
+.square_choices ul li {
+	list-style-type: none;
+}
+
+.display { font-size: 2vw; }
+
+.square_choices ul {
+	text-align: center;
+	margin: 1vw;
+	padding: 1vw;
+	background-color: #A4A9B9;
+	border-radius: 1vw;
+}
+
+.square_choices ul li img {
+	width: 10vw;
+	height: 10vw;
+	border-radius: 2vw;
+}
+
 input { font-size: 1em }
 
 .square_choices article, .square_choices aside.form_complement { flex: 1 360px; }
 
 @media screen and (max-width:1000px), @media handheld {
-	html { font-size: 2em; }
+	html { font-size: 4vw; }
 	p { text-align: left; }
 
 	.square_choices article {
@@ -447,3 +468,7 @@ ul.ingame li.buzz a:hover { color: white; }
 
 .buzz span { padding: 0 10px }
 .buzz a { padding: 0 3px }
+
+.buzzer { font-size: 13vw; font-weight: bold; text-align: center; background-color: #bb2222; color: white; border-radius: 1vw; cursor: pointer;}
+
+.hide { background-color: #2E3A42; }

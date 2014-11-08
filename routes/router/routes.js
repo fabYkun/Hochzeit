@@ -35,12 +35,10 @@ module.exports = function(all)
 		var j;
 
 		if (err) return (console.error("TS: " + Date.now() + " - " + err));
-		while (fxArray[++i])
-		{
-			j = -1;
-			while (fxArray[i].sessionNeeded && fxArray[i].sessionNeeded[++j])
-				fxArray[i].sessionNeeded[j](all, socket, session, models);
-		}
+		require(all.root + "/models/admin")(all, socket, session, models);
+		require(all.root + "/models/adminControl")(all, socket, session, models);
+		require(all.root + "/models/roomAccess")(all, socket, session, models);
+		require(all.root + "/models/player")(all, socket, session, models);
 	});
 
 	function adminIsSet(req, res, next)

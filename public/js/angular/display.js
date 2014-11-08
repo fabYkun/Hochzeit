@@ -8,14 +8,19 @@ adminRoomApp.controller("displayCtrl", function ($scope, socket, languages){
 	$scope.languageIndex = 0;
 	$scope.conclusion = {};
 	$scope.buzzerName;
+	$scope.buzzerImg;
 	var roomID = document.getElementById("roomID").textContent;
 	var song;
 	var autoplay = true;
+	var dontPlay = false;
 
 	socket.on("stateChanged", function(newState)
 	{
+		var extension;
 		$scope.room.state = newState;
+
 		if (newState == "Closed") makeConclusions();
+		else window.location.reload(true);
 		$scope.$apply();
 	});
 
@@ -26,9 +31,14 @@ adminRoomApp.controller("displayCtrl", function ($scope, socket, languages){
 		audio.src = uri;
 		return (audio);
 	}
-	function songLoaded() { if (autoplay) song.play(); }
+	function songLoaded() { if (autoplay && !dontPlay) song.play(); }
 	$scope.pauseMusic = function() { if (song) song.pause(); };
-	$scope.playMusic = function() { if (song) song.play(); };
+	$scope.playMusic = function() { if (song && !dontPlay) song.play(); };
+	$scope.stopMusic = function()
+	{
+		if (song) song.pause();
+		dontPlay = true;
+	}
 
 	function makeConclusions()
 	{
@@ -56,7 +66,10 @@ adminRoomApp.controller("displayCtrl", function ($scope, socket, languages){
 	socket.on("getRoom", function(room)
 	{
 		var extension;
+		var i = -1;
 
+		while (room.players[++i])
+			room.players[i].img = room.players[i].pseudo.replace(/ /g, "-").toLowerCase();
 		$scope.room = room;
 		$scope.languageIndex = room.languages.indexOf($scope.language) ? room.languages.indexOf($scope.language) : 0;
 		if (room.state == "Closed") makeConclusions();
@@ -65,6 +78,7 @@ adminRoomApp.controller("displayCtrl", function ($scope, socket, languages){
 			if (room.buzzer)
 			{
 				$scope.buzzerName = room.buzzer;
+				$scope.buzzerImg = $scope.buzzerName.replace(/ /g, "-").toLowerCase();
 				autoplay = false;
 			}
 			if (room.quest[room.index].media)
@@ -86,12 +100,14 @@ adminRoomApp.controller("displayCtrl", function ($scope, socket, languages){
 	socket.on("newPlayer", function(index, player)
 	{
 		$scope.room.players[index] = player;
+		$scope.room.players[index].img = player.pseudo.replace(/ /g, "-").toLowerCase();
 		$scope.$apply();
 	});
 
 	socket.on("buzzer", function(name)
 	{
-		$scope.buzzerName = name;
+		if (($scope.buzzerName = name))
+			$scope.buzzerImg = $scope.buzzerName.replace(/ /g, "-").toLowerCase();
 		if (!name) $scope.playMusic();
 		else $scope.pauseMusic();
 		$scope.$apply();

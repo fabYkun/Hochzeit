@@ -4,6 +4,25 @@ module.exports = function(all, roomsModel)
 	var app = all.app;
 	var module = {};
 
+	function shuffle(array) {
+		var currentIndex = array.length, temporaryValue, randomIndex ;
+
+		// While there remain elements to shuffle...
+		while (0 !== currentIndex) {
+
+			// Pick a remaining element...
+			randomIndex = Math.floor(Math.random() * currentIndex);
+			currentIndex -= 1;
+
+			// And swap it with the current element.
+			temporaryValue = array[currentIndex];
+			array[currentIndex] = array[randomIndex];
+			array[randomIndex] = temporaryValue;
+		}
+
+		return array;
+	}
+
 	module.quest = function(req, res, next)
 	{
 		var formidable = require("formidable");
@@ -85,7 +104,7 @@ module.exports = function(all, roomsModel)
 					newQuest = new roomsModel.QuestSchema({
 						Name:		name,
 						Languages:	lang,
-						Data:		quest
+						Data:		shuffle(quest)
 					});
 					newQuest.save(function(err) { if (err) return (error(err)) })
 				});

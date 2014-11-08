@@ -28,7 +28,6 @@ module.exports = function(all)
 	}
 
 	module.sessionNeeded = []; // listeners
-	module.sessionNeeded.push(require(all.root + "/models/roomAccess"));
 
 	return (module);
 }

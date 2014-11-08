@@ -23,8 +23,12 @@ angular.module("languages", [])
 				},
 				missingData:		"Il manque des informations",
 				noNextQuestion:		"Il n'y a plus de questions, appuyez sur Entrer pour fermer la salle",
-				registrationSuccessful: "Inscription réussie !",
-				inGame:				"En jeu"
+				room:
+				{
+					Open:			"Inscription réussie !",
+					"In Game":		"En jeu",
+					Closed:			"Session fermée"
+				}
 			},
 			en: {
 				wait:				"Please wait",
@@ -44,8 +48,12 @@ angular.module("languages", [])
 				},
 				missingData:		"Informations are missing",
 				noNextQuestion:		"There is no more questions left, press Enter to close the room",
-				registrationSuccessful: "Registration successful !",
-				inGame:				"In game"
+				room:
+				{
+					Open:			"Registration successful !",
+					"In Game":		"In game",
+					Closed:			"Room closed"
+				}
 			}
 		};
 		return (languages);

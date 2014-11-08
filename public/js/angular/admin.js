@@ -18,7 +18,6 @@ adminApp.controller("adminCtrl", function ($scope, socket, languages){
 			name: $scope.newRoom.name,
 			model: $scope.newRoom.model.name
 		});
-		return (socket.setLogs([{message: languages[$scope.language].wait}]));
 	}
 
 	$scope.deleteRoom = function(name) { socket.emit("deleteRoom", name); };
