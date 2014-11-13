@@ -8,7 +8,8 @@ module.exports = function(all, socket, session, models)
 	{
 		var messages = {
 			"en":	"An error occured",
-			"fr":	"Une erreur est apparue"
+			"fr":	"Une erreur est apparue",
+			"de":	"Fehlermeldung"
 		}
 		console.error("TS: " + Date.now() + " - " + err);
 		socket.emit("err", [{error: true, message: ((session.language && messages[session.language]) ? messages[session.language] : "An error occured") + " (" + err + ")"}]);
@@ -26,7 +27,8 @@ module.exports = function(all, socket, session, models)
 	{
 		var messages = {
 			"en":	"New admin registered",
-			"fr":	"Nouvel admin enregistré"
+			"fr":	"Nouvel admin enregistré",
+			"de":	"Neuer Admin"
 		}
 
 		if (!session) return;
@@ -46,7 +48,7 @@ module.exports = function(all, socket, session, models)
 					if (err) return (bdd_fail(err));
 					session.admin = {autoAuth: authCookie};
 					session.save();
-					return (socket.emit("success", [{message: ((session.language && messages[session.language]) ? messages[session.language] : "Connexion successful")}]));
+					return (socket.emit("success", [{message: ((session.language && messages[session.language]) ? messages[session.language] : "New admin registered")}]));
 				});
 			});
 		});
@@ -56,7 +58,8 @@ module.exports = function(all, socket, session, models)
 	{
 		var messages = {
 			"en":	"Connexion successful",
-			"fr":	"Connection réussie"
+			"fr":	"Connection réussie",
+			"de":	"Erfolgreich Verbindung"
 		}
 
 		users.AdminSchema.findOne({}).exec(function(err, user)

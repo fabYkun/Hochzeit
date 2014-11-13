@@ -54,6 +54,31 @@ angular.module("languages", [])
 					"In Game":		"In game",
 					Closed:			"Room closed"
 				}
+			},
+			de: {
+				wait:				"Bitte warten",
+				closeLogs:			"Schliesen",
+				responded:			"Geantwortet",
+				waitingForAnswers:	"Auf die Antwort warten",
+				failServer:			"Prozessfehler",
+				newAdmin:
+				{
+					failPassword: 	"Falsches oder leeres Password",
+					successServer:	"The recording of the new admin has been successful ! The page will refresh"
+				},
+				adminAuth:
+				{
+					failPassword:	"Authentification failed, try again",
+					emptyPassword:	"The password you've send is empty"
+				},
+				missingData:		"Informations are missing",
+				noNextQuestion:		"There is no more questions left, press Enter to close the room",
+				room:
+				{
+					Open:			"Erfolgreiche Registrierung !",
+					"In Game":		"Im Spiel",
+					Closed:			"Raum geschlossen"
+				}
 			}
 		};
 		return (languages);

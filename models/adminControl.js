@@ -7,7 +7,8 @@ module.exports = function(all, socket, session, models)
 	{
 		var messages = {
 			"en":	"An error occured",
-			"fr":	"Une erreur est apparue"
+			"fr":	"Une erreur est apparue",
+			"de":	"Fehlermeldung"
 		}
 		console.error("TS: " + Date.now() + " - " + err);
 		socket.emit("err", [{error: true, message: ((session.language && messages[session.language]) ? messages[session.language] : "An error occured") + " (" + err + ")"}]);
@@ -44,11 +45,15 @@ module.exports = function(all, socket, session, models)
 		var messages = {
 			fr: {
 				roomDeleted:		"Session détruite",
-				roomDoesntExist:	"Cette session n'existe pas"
+				roomDoesntExist:	"Cette session n'existe pas",
 			},
 			en: {
 				roomDeleted:		"Room destroyed",
 				roomDoesntExist:	"This room doesn't exist"
+			},
+			de: {
+				roomDeleted:		"Raum wurde geschlossen",
+				roomDoesntExist:	"Dieses Raum existiert nicht"
 			}
 		};
 
@@ -81,6 +86,12 @@ module.exports = function(all, socket, session, models)
 				roomCreated:		"La session a été créee"
 			},
 			en: {
+				incorrectName:		"Only A-Za-z, 0-9, [] and () symbols are allowed within a room's name",
+				roomAlreadyExists:	"A room named this way has already been created",
+				questDoesntExist:	"The assigned quest does not seem to exist",
+				roomCreated:		"The room has been created"
+			},
+			de: {
 				incorrectName:		"Only A-Za-z, 0-9, [] and () symbols are allowed within a room's name",
 				roomAlreadyExists:	"A room named this way has already been created",
 				questDoesntExist:	"The assigned quest does not seem to exist",

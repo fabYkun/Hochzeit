@@ -7,7 +7,8 @@ module.exports = function(all, socket, session, models)
 	{
 		var messages = {
 			"en":	"An error occured",
-			"fr":	"Une erreur est apparue"
+			"fr":	"Une erreur est apparue",
+			"de":	"Fehlermeldung"
 		}
 		console.error("TS: " + Date.now() + " - " + err);
 		socket.emit("err", [{error: true, message: ((session.language && messages[session.language]) ? messages[session.language] : "An error occured") + " (" + err + ")"}]);
@@ -17,11 +18,13 @@ module.exports = function(all, socket, session, models)
 	{
 		var failure = {
 			"en":	"Pseudo already taken",
-			"fr":	"Pseudo déjà pris"
+			"fr":	"Pseudo déjà pris",
+			"de":	"Name schon vergeben"
 		};
 		var success = {
 			"en":	"Pseudo changed",
-			"fr":	"Pseudo changé"
+			"fr":	"Pseudo changé",
+			"de":	"Name geändert"
 		};
 
 		if (!pseudo || pseudo.length > 3) return (socket.emit("success", [{message: ((session.language && success[session.language]) ? success[session.language] : "Pseudo too short")}]));

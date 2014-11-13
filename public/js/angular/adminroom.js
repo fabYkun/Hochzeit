@@ -29,14 +29,12 @@ adminRoomApp.controller("adminRoomCtrl", function ($scope, socket, languages){
 		{
 			j = -1;
 			while ($scope.conclusion.winners[++j])
-			{
 				if ($scope.conclusion.winners[j + 1] && $scope.conclusion.winners[j + 1].points > $scope.conclusion.winners[j].points)
 				{
 					swap = $scope.conclusion.winners[j];
 					$scope.conclusion.winners[j] = $scope.conclusion.winners[j + 1];
 					$scope.conclusion.winners[j + 1] = swap;
 				}
-			}
 		}
 	}
 

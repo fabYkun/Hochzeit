@@ -13,11 +13,22 @@
 			<nav class="square_choices">
 				<article>
 					<h1>{[roomList]}</h1>
-					<ul>
+					<ul ng-show="rooms[0]">
 						<li ng-repeat="room in rooms"><a href="/admin/{{room.url}}">{{room.name}}</a> - {{room.state}} - <span class="action" ng-click="deleteRoom(room.name)">Supprimer</span></li>
 					</ul>
-					{[newRoomForm.name]}: <input type="text" ng-model="newRoom.name" maxlength="255" placeholder="{[newRoomForm.name]}" />
-					{[newRoomForm.quest]}: <select ng-model="newRoom.model" ng-options="questionnaire.selected for questionnaire in questionnaires"></select> - <span class="action" ng-click="createRoom()">{[newRoomForm.create]}</span>
+					<form>
+						<label><div class="input-rounded-groups">
+							<span class="radius left">{[newRoomForm.name]}</span><input type="text" class="radius right" ng-model="newRoom.name" maxlength="255" placeholder="{[newRoomForm.name]}" required />
+						</div></label>
+						<label><div class="input-rounded-groups">
+							<span class="radius left">{[newRoomForm.quest]}</span><select ng-model="newRoom.model" ng-options="questionnaire.selected for questionnaire in questionnaires"></select>
+						</div></label>
+						<div class="input-rounded-groups button" ng-cloak>
+							<div class="ensemble radius">
+								<button class="radius"type="submit" ng-click="createRoom()">{[newRoomForm.create]}</button>
+							</div>
+						</div>
+					</form>
 				</article>
 			</nav>
 			<nav class="square_choices">
@@ -25,15 +36,17 @@
 					<h1>{[newQuest]}</h1>
 					<form action="/upload" enctype="multipart/form-data" method="post">
 						<label><div class="input-rounded-groups">
-							<span class="radius left">{[newRoomForm.name]}</span><input type="text" name="title" class="radius right" maxlength="255" required="required" />
+							<span class="radius left">{[newRoomForm.name]}</span><input type="text" name="title" class="radius right" maxlength="255" required />
 						</div></label>
 						<label><div class="input-rounded-groups">
-							<span class="radius left">{[newRoomForm.languages]}</span><input type="text" name="lang" class="radius right" maxlength="255" required="required" placeholder="fr, en, de, ..." />
+							<span class="radius left">{[newRoomForm.languages]}</span><input type="text" name="lang" class="radius right" maxlength="255" placeholder="fr, en, de, ..." required />
+						</div></label>
+						<label><div class="input-rounded-groups">
+							<span class="radius left">{[newRoomForm.quest]}</span><input type="file" name="upload" required />
 						</div></label>
 						<div class="input-rounded-groups button" ng-cloak>
 							<div class="ensemble radius">
-								<input type="file" name="upload" required="required" >
-								<button class="radius" type="submit">upload</button>
+								<button class="radius" type="submit">{[newRoomForm.upload]}</button>
 							</div>
 						</div>
 					</form>

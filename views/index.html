@@ -13,19 +13,10 @@
 			<nav class="square_choices reverse">
 				<article>
 					<h1>{[rooms]}</h1>
-					<ul>
+					<span ng-hide="rooms[0]">{[noRooms]}</span>
+					<ul ng-show="rooms[0]">
 						<li ng-repeat="room in rooms">
 							{{room.name}} ({{room.players.length ? room.players.length : 0}}) - <a href="/player/{{room.url}}">{[join]}</a>
-						</li>
-					</ul>
-				</article>
-			</nav>
-			<nav class="square_choices reverse">
-				<article>
-					<h1>{[views]}</h1>
-					<ul>
-						<li ng-repeat="room in views">
-							{{room.name}} ({{room.players.length ? room.players.length : 0}}) - <a href="/display/{{room.url}}">{[join]}</a>
 						</li>
 					</ul>
 				</article>

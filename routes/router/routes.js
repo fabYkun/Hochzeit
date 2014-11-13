@@ -87,7 +87,8 @@ module.exports = function(all)
 	{
 		var messages = {
 			"en":	"An error occured",
-			"fr":	"Une erreur est apparue"
+			"fr":	"Une erreur est apparue",
+			"de":	"Fehlermeldung"
 		}
 		console.error("TS: " + Date.now() + " - " + err);
 		return (res.redirect("/"));

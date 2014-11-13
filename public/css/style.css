@@ -22,8 +22,8 @@ html, body {
 body {
 	font-family: "Open Sans", sans-serif;
 	font-size: 1.2em;
-	color: #2e3a42;
-	background-color: #424f5b;
+	color: #eee;
+	background-color: #721D31;
 	display: flex;
 	min-height: 100vh;
 	flex-direction: column;
@@ -32,17 +32,18 @@ body {
 header {
 	text-align: center;
 	min-height: 10px;
-	background-color: #a4a9b9;
+	background-color: #390E18;
 }
 
 header h1 {
 	margin: 0;
 	font-size: 5em;
+	padding: 10px;
 }
 
 header div.info {
-	background-color: #2E3A42;
-	color: #A4A9B9;
+	background-color: #2E0C14;
+	color: #512A33;
 }
 
 p {
@@ -50,11 +51,20 @@ p {
 	text-align: justify;
 }
 
-@media screen and (max-width: 1000px), @media handheld {
+@media screen and (max-width: 945px), @media handheld {
 	header h1 { text-align: center; font-size: 16vw; }
 }
 
-h1 { font-size: 1.2em; margin: 10px; margin-bottom: 20px; }
+h1 {
+	font-size: 1.2em;
+	margin: 10px 10px 20px;
+	color: #B42529;
+	background-color: #390E18;
+	margin: -15px -15px 30px;
+	padding: 10px;
+	padding-left: 30px;
+	font-size: 2em;
+}
 
 a.unlink { color: grey; }
 
@@ -64,7 +74,7 @@ section {
 }
 
 article, aside {
-	background-color: #DADADD;
+	background-color: #44111D;
 	padding: 15px;
 	margin: 15px;
 }
@@ -89,7 +99,7 @@ article, aside {
 	text-align: center;
 	margin: 1vw;
 	padding: 1vw;
-	background-color: #A4A9B9;
+	background-color: #390E18;
 	border-radius: 1vw;
 }
 
@@ -99,11 +109,18 @@ article, aside {
 	border-radius: 2vw;
 }
 
-input { font-size: 1em }
+input, button, select {
+	font-size: 1em;
+	color: white;
+	background-color: rgba(180, 37, 41, 0.6);
+	border: 1px solid #390E18;
+}
+
+input:hover, button:hover, select:hover { background-color: rgba(180, 37, 41, 0.4) }
 
 .square_choices article, .square_choices aside.form_complement { flex: 1 360px; }
 
-@media screen and (max-width:1000px), @media handheld {
+@media screen and (max-width:945px), @media handheld {
 	html { font-size: 4vw; }
 	p { text-align: left; }
 
@@ -123,10 +140,9 @@ footer {
 	padding: 7px;
 	cursor: default;
 	color: #fff;
-	background-color: #2e3a42;
+	background-color: #2E0C14;
 	text-align: center;
 	font-weight: bold;
-	color: #A4A9B9;
 }
 
 footer ul {
@@ -175,24 +191,14 @@ div.input-rounded-groups
 	display: table;
 }
 
-div.input-rounded-groups input:disabled {
-    background-color: #eee;
-}
-
-div.input-rounded-groups input:disabled:hover {
-	background-color: #eee;
-}
-
 div.input-group-addon:first-child {
 	border-right: none;
 	border-top-right-radius: 0;
 	border-bottom-right-radius: 0;
 }
 
-div.input-rounded-groups input, div.input-rounded-groups span, div.input-rounded-groups button
+div.input-rounded-groups input, div.input-rounded-groups span, div.input-rounded-groups button, div.input-rounded-groups select
 {
-	color: #555;
-	background-color: #eee;
 	border: 1px solid #ccc;
 	padding: 6px 12px;
 	line-height: 1;
@@ -212,17 +218,12 @@ div.input-rounded-groups span.mini {
 	border: 1px solid #ccc;
 }
 
-div.input-rounded-groups input {
+div.input-rounded-groups input, div.input-rounded-groups select {
 	display: table-cell;
 	width: 100%;
-	background-color: rgba(255, 255, 255, 0.8);
 	box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset;
 	text-align: left;
 	transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
-}
-
-div.input-rounded-groups input:hover, div.input-rounded-groups input:focus {
-	background-color: rgba(255, 255, 255, 1);
 }
 
 div.ensemble
@@ -322,7 +323,7 @@ div.input-rounded-groups button {
 
 a {
 	text-decoration: none;
-	color: #474970;
+	color: #B42529;
 	font-weight: 800;
 }
 
@@ -378,7 +379,7 @@ span.action:hover { color: #fff }
 aside.form_complement {
 	box-shadow: 7px 7px 10px rgba(0, 0, 0, 0.33);
 	text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.13);
-	background-color: #DADADD;
+	background-color: #44111D;
 	min-height: 0;
 	padding: 0;
 	margin: 50px auto auto auto;
@@ -408,7 +409,7 @@ aside.form_complement p:last-child
 }
 
 aside.form_complement p.error, div.logs.error {
-	color: black;
+	color: #bb2222;
 }
 
 input.ng_invalid.ng_dirty, p.error, div.logs.error {
@@ -452,7 +453,7 @@ p.warning, p.error, div.logs.warning, div.logs.error {
 .blackscreen img { border-radius: 1em; }
 
 .correct { background-color: green}
-.buzz { background-color: #2E3A42; color: #A4A9B9;}
+.buzz { background-color: #2E0C14; color: #eee }
 
 ul.ingame { padding: 0; margin-left: -15px; margin-right: -15px; }
 ul.ingame li { margin: 0; padding: 0 15px; list-style-type: none; }
@@ -463,7 +464,7 @@ ul.ingame li.buzz input
 	background: rgba(255, 255, 255, 0.2);
 	color: white;
 }
-ul.ingame li.buzz a { color: #DADADD; }
+ul.ingame li.buzz a { color: #b22; }
 ul.ingame li.buzz a:hover { color: white; }
 
 .buzz span { padding: 0 10px }
@@ -471,4 +472,4 @@ ul.ingame li.buzz a:hover { color: white; }
 
 .buzzer { font-size: 13vw; font-weight: bold; text-align: center; background-color: #bb2222; color: white; border-radius: 1vw; cursor: pointer;}
 
-.hide { background-color: #2E3A42; }
+.hide { background-color: #2E0C14; }

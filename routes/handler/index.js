@@ -5,26 +5,10 @@ module.exports = function(all)
 
 	module.regular = function(req, res)
 	{
-		var swig = {
-			"fr": {
-				main:		app.get("main"),
-				title:		"Sélection d'un jeu en cours",
-				rooms:		"Salles disponibles",
-				views:		"Salles visibles",
-				join:		"Rejoindre",
-				lang:		"fr"
-			},
-			"en": {
-				main:		app.get("main"),
-				title:		"Current game selection",
-				rooms:		"Rooms available",
-				views:		"Salles visibles",
-				join:		"Join",
-				lang:		"en"
-			}
-		};
+		var swig = all.translations.translate(all.translations.handlers.index, req.session.language);
+		swig.main = app.get("main");
 
-		res.render("index", swig[((req.session && req.session.language && swig[req.session.language]) ? req.session.language : app.get("lang"))]);
+		res.render("index", swig);
 	}
 
 	module.sessionNeeded = []; // listeners

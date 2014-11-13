@@ -6,7 +6,8 @@ module.exports = function(all, socket, session, models)
 	{
 		var messages = {
 			"en":	"An error occured",
-			"fr":	"Une erreur est apparue"
+			"fr":	"Une erreur est apparue",
+			"de":	"Fehlermeldung"
 		}
 		console.error("TS: " + Date.now() + " - " + err);
 		socket.emit("err", [{error: true, message: ((session.language && messages[session.language]) ? messages[session.language] : "An error occured") + " (" + err + ")"}]);
@@ -46,7 +47,8 @@ module.exports = function(all, socket, session, models)
 	{
 		var failure = {
 			"en":	"No room found",
-			"fr":	"Room introuvable"
+			"fr":	"Room introuvable",
+			"de":	"Raum kann nicht gefunden werden"
 		};
 
 		var query = rooms.RoomSchema.findOne({Identifer: roomID});
@@ -74,11 +76,13 @@ module.exports = function(all, socket, session, models)
 	{
 		var failure = {
 			"en":	"No room found",
-			"fr":	"Room introuvable"
+			"fr":	"Room introuvable",
+			"de":	"Raum kann nicht gefunden werden"
 		};
 		var notConnected = {
 			"en":	"Session expired",
-			"fr":	"Session expirée"
+			"fr":	"Session expirée",
+			"de":	"Sitzung abgelaufen"
 		}
 
 		if (!session.user || !session.user.room || !session.user.pseudo) return (socket.emit("err", [{error: true, message: ((session.language && notConnected[session.language]) ? notConnected[session.language] : "Session expired")}]));
