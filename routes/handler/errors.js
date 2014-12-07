@@ -9,8 +9,6 @@ module.exports = function(all)
 			return (next(err));
 
 		var swig = all.translations.translate(all.translations.handlers.errors[404], req.session.language);
-		swig.main = app.get("main");
-
 		res.status(404);
 		res.render("erreur", swig);
 	}
@@ -21,8 +19,6 @@ module.exports = function(all)
 			return (next(err));
 
 		var swig = all.translations.translate(all.translations.handlers.errors[503], req.session.language);
-		swig.main = app.get("main");
-
 		res.status(503);
 		res.render("erreur", swig);
 	}
@@ -30,8 +26,6 @@ module.exports = function(all)
 	module.e_final = function(err, req, res, next)
 	{
 		var swig = all.translations.translate(all.translations.handlers.errors[500], req.session.language);
-		swig.main = app.get("main");
-
 		console.error(err);
 		console.error("\n--- err.stack (e_final) ---\n");
 		console.error(new Date);

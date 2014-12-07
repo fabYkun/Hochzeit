@@ -35,15 +35,13 @@ module.exports = function(all, socket, session, models)
 		bcrypt.genSalt(10, function (err, salt){
 			if (err) return (bdd_fail(err));
 			bcrypt.hash(password, salt, null, function (err, hash){
-				if (err)
-					return (socket.emit("err"));
-
+				if (err) (socket.emit("err"));
 				var authCookie = Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-8);
-
 				var newAdmin = new users.AdminSchema({
 					Password: hash,
 					AuthCookie: authCookie
 				});
+
 				newAdmin.save(function (err){
 					if (err) return (bdd_fail(err));
 					session.admin = {autoAuth: authCookie};
@@ -57,21 +55,31 @@ module.exports = function(all, socket, session, models)
 	function adminAuth(password)
 	{
 		var messages = {
-			"en":	"Connexion successful",
-			"fr":	"Connection réussie",
-			"de":	"Erfolgreich Verbindung"
+			fail:
+			{
+				"en":	"Connexion failed",
+				"fr":	"Connection échouée",
+				"de":	"Verbindung fehlgeschlagen"
+			},
+			success:
+			{
+				"en":	"Connexion successful",
+				"fr":	"Connection réussie",
+				"de":	"Erfolgreich Verbindung"
+			}
 		}
 
 		users.AdminSchema.findOne({}).exec(function(err, user)
 		{
 			if (!user) return (socket.emit("err"));
 			bcrypt.compare(password, user.Password, function (err, res) {
-				if (err || !res) return (bdd_fail());
+				if (err) return (bdd_fail(err));
+				else if (!res) return (socket.emit("err", [{message: ((session.language && messages.fail[session.language]) ? messages.fail[session.language] : "Connexion failed")}]));
 				else
 				{
 					session.admin = {autoAuth: user.AuthCookie};
 					session.save();
-					return (socket.emit("success", [{message: ((session.language && messages[session.language]) ? messages[session.language] : "Connexion successful")}]));
+					return (socket.emit("success", [{message: ((session.language && messages.success[session.language]) ? messages.success[session.language] : "Connexion successful")}]));
 				}
 			});
 		});

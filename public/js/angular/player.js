@@ -11,7 +11,6 @@ playerApp.controller("playerCtrl", function ($scope, socket, languages){
 	$scope.title = languages[$scope.language].wait;
 	navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate;
 
-	window.setTimeout(function() { window.location.reload(true) }, (Math.round((Math.random() * 10) % 10) * 1000) + 25000);
 	$scope.changePseudo = function() { socket.emit("changePseudo", $scope.pseudo); };
 	socket.emit("getMyRoom");
 	socket.on("getRoom", function(room)

@@ -3,8 +3,8 @@ var language = "fr"; // default language
 var express = require("express");
 var mongoose = require("mongoose");
 var mongo_conf = require("./conf/mongo_configuration")();
-var translations = require("./translations/translation")(language);
 var all = require("./conf/configurations")(express, __dirname);
+var translations = require("./translations/translation")(all, language);
 all.app.set("lang", language);
 
 mongoose.connection.on("connected", console.error.bind(console, "DB[root] : connection successful"));

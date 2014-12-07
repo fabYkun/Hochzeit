@@ -1,9 +1,10 @@
-module.exports = function(defaultLanguage)
+module.exports = function(all, defaultLanguage)
 {
 	var module = {};
 	var handlers = {};
 
 	handlers.admin = require("./adminHandler");
+
 	handlers.display = require("./displayHandler");
 	handlers.errors = require("./errorsHandler");
 	handlers.index = require("./indexHandler");
@@ -12,8 +13,13 @@ module.exports = function(defaultLanguage)
 	module.handlers = handlers;
 	module.translate = function(translations, target)
 	{
-		if (!translations) return ("");
-		return (translations[target] || translations[defaultLanguage] || translations["en"] || {});
+		var translation;
+
+		if (!translations) return ({lang: target});
+		translation = translations[target] || translations[defaultLanguage] || translations["en"] || {};
+		translation.lang = target;
+		translation.main = all.app.get("main");
+		return (translation);
 	};
 
 	return (module);

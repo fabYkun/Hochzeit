@@ -9,8 +9,6 @@ module.exports = function(all)
 
 		var swig = all.translations.translate(all.translations.handlers.display, req.session.language);
 		swig.roomID = req.params.room ? req.params.room : "";
-		swig.main = app.get("main");
-
 		res.render("display", swig);
 	}
 	return (module);
